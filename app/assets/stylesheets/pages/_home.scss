@@ -15,10 +15,27 @@ h2 {
 }
 
 .home-title {
-    padding-top: 80px;
+    padding-top: 60px;
 }
 
 .home-white-bg {
     background-color: $white;
     height: 800px;
+}
+
+.image-review {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.card {
+    border-radius: 10px;
+    border: 1px solid $wire-gray;
+    margin-top: 60px;
+}
+
+.card i {
+    color: $yellow;
 }
