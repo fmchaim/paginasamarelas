@@ -1,0 +1,16 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-12 col-md-6 offset-lg-3">
+      <div class="bg-white rounded p-3 shadow">
+        <h3>Create a new Service</h3>
+        <%= simple_form_for @service do |f| %>
+          <%= f.input :name_service, placeholder: 'service' %>
+          <%= f.input :description_service, placeholder: 'description' %>
+          <%= f.input :category, collection: @categorys%>
+          <%= f.input :price, placeholder: 'price' %>
+          <%= f.submit class: 'btn btn-flat' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
