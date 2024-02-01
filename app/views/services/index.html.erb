@@ -1,0 +1,64 @@
+    <div class="row">
+       <div class="col-md-8">
+      <form action="/services" method="get">
+      <select name="search">
+      <option value="">Select a Category</option>
+      <% @categorys.each do |category| %>
+      <option value="<%= category %>"><%= category %></option>
+      <% end %>
+      </select>
+      <button type="submit" class="btn btn-primary" style="border-radius: 5px; width: 100px">Find</button>
+      </form>
+    </div>
+    </div>
+
+
+    <section>
+      <div class="row">
+        <div class="col-md-8">
+          <% @services.each do |service| %>
+          <% user = User.find(service.user_id)%>
+          <div class="card">
+            <div class="card-header">
+              <%= service.name_service %>
+            </div>
+            <div class="card-body">
+              <p><%= service.description_service %></p>
+              <p><%= service.category %></p>
+              <p><%= service.price %></p>
+              <h1><%=user.email%></h1>
+
+
+              <a href="#" class="btn btn-primary" style="border-radius: 5px; width: 100px">Contract</a>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <%= link_to "New Service", new_service_path, class: "btn btn-primary" %>
+
+
+    <style>
+      .card {
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+      }
+
+      .card-header {
+        background-color: #f5f5f5;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .card-body {
+        padding: 10px;
+      }
+
+      .btn {
+        margin-top: 10px;
+      }
+    </style>
