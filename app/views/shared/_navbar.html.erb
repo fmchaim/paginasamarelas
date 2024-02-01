@@ -1,9 +1,11 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon text-center">
   <div class="container-fluid">
     <%= link_to "/", class: "navbar-brand" do %>
+      <div class="d-flex">
       <%= image_tag "yellow_pages_logo.png" %>
+      <p class="logo-name ms-2 mb-0">yellow pages</p>
+      </div>
     <% end %>
-    <p class="logo-name mb-0 mx-auto">yellow pages</p>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -29,6 +31,7 @@
             </div>
           </li>
         <% else %>
+
               <li class="nav-item d-flex">
                 <%= link_to "Login", new_user_session_path, class: "nav-link" %>
                 <%= link_to "Sign up", new_user_registration_path, class: "btn btn-dark ms-2" %>
