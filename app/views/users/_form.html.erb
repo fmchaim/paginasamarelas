@@ -1,6 +1,9 @@
 <%= simple_form_for @user do |f| %>
-  <%= f.input :first_name, required: true %>
-  <%= f.input :last_name, required: true %>
+  <div class="name d-flex">
+    <%= f.input :first_name, required: true %>
+    <%= f.input :last_name, required: true %>
+  </div>
+  <%= f.input :photo, as: :file %>
   <%= f.input :city, required: true %>
   <%= f.input :state, required: true %>
   <%= f.input :phone, required: true %>
