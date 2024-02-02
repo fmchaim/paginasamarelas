@@ -1,1 +1,41 @@
 // Specific CSS for your home-page
+h2 {
+    font-family: $logo-font;
+}
+
+.home-hero {
+    background-color: $yellow;
+    height: 350px;
+}
+
+.home-categories {
+    background-color: $wire-gray;
+    height: 400px;
+    margin-top: 80px;
+}
+
+.home-title {
+    padding-top: 60px;
+}
+
+.home-white-bg {
+    background-color: $white;
+    height: 800px;
+}
+
+.image-review {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.card {
+    border-radius: 10px;
+    border: 1px solid $wire-gray;
+    margin-top: 60px;
+}
+
+.card i {
+    color: $yellow;
+}
