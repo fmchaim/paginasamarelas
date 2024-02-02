@@ -23,11 +23,11 @@
               <%= service.name_service %>
             </div>
             <div class="card-body">
-              <p><%= service.description_service %></p>
+              <%= cl_image_tag service.photo.key, height: 300, width: 400, crop: :fill %>
+                           <p><%= service.description_service %></p>
               <p><%= service.category %></p>
               <p><%= service.price %></p>
               <h1><%=user.email%></h1>
-
 
               <a href="#" class="btn btn-primary" style="border-radius: 5px; width: 100px">Contract</a>
             </div>
