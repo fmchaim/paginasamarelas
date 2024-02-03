@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+<%= simple_form_for @service do |f| %>
+  <%= f.input :name_service, label: 'Title', placeholder: 'Your Company Co.' %>
+  <%= f.input :description_service, label: 'Description', placeholder: 'I fix and install lights' %>
+  <%= f.input :category, collection: @categorys%>
+  <%= f.input :photo, as: :file %>
+  <%= f.input :address, label: 'Address', placeholder: 'Street, Number, City' %>
+  <%= f.input :price, placeholder: '$' %>
+
+  <%= f.button :submit, "Save Service", class:"btn-yellow" %>
+<% end %>
+=======
 <div class="container">
   <div class="row">
     <h2 class="text-center mt-4 mb-4 p-0">Add a Service</h2>
@@ -16,3 +28,4 @@
     </div>
   </div>
 </div>
+>>>>>>> f0fd88f77d3a3f16b40182e278a96732f50a5ea8
