@@ -12,9 +12,10 @@
   <% if current_user == contract.user_id %>
     <p><strong>Status:</strong> <%= @contract.status %></p>
     <p><strong>Concluído:</strong> <%= @contract.done ? 'Sim' : 'Não' %></p>
-  <% elsif current_user == contract.service.user_id %>
-    <p><strong>Status:</strong><%= @contract.status %></p> <%# Fazer como o usuário PS vai aceitar ou rejeitar o contrato %>
-    <p><strong>Concluído:</strong> <%= @contract.done ? 'Sim' : 'Não' %></p>
+  <% elsif current_user == contract.service_id.user_id %>
+    <% if @contract.status == "Pending" %>
+      <p><strong>Status:</strong><%= @contract.status %></p> <%# Fazer como o usuário PS vai aceitar ou rejeitar o contrato %>
+      <p><strong>Concluído:</strong> <%= @contract.done ? 'Sim' : 'Não' %></p>
   <% end %>
   <%= link_to 'Voltar para Contratos', contracts_path %>
 </div>

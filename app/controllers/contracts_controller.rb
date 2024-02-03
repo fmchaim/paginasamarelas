@@ -4,13 +4,11 @@ class ContractsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    @contracts = Contract.where('user_id = ?', current_user.id)
-
-    # @contracts = current_user.contracts
+    @contracts = Contract.where('user_id = ? OR service_id = ?', current_user.id, @contract.service_id.user_id)
   end
 
   def show
-    @contract = Contract.where('service_id = ?', @contract.service_id)
+    @contract = Contract.where('service_id = ? OR user_id = ?', @contract.service_id, current_user.id)
   end
 
   def new
@@ -23,9 +21,9 @@ class ContractsController < ApplicationController
     @contract.service = @service # Atribuindo o serviço ao contrato
 
     if @contract.save
-      redirect_to dashboard_path(@contract), notice: 'Contrato criado com sucesso.'
+      redirect_to dashboard_path(@contract), notice: 'contract created successfully!'
     else
-      render :new, status: :unprocessable_entity, notice: 'Não foi possível criar o contrato.'
+      render :new, status: :unprocessable_entity, notice: 'Unable to create contract.'
     end
   end
 
@@ -38,24 +36,24 @@ class ContractsController < ApplicationController
     @contract = Contract.find(params[:id])
     new_status = params[:status] # 'accept' ou 'decline'
 
-    if current_user.id == @contract.service.user_id # Verifica se o usuário logado é o prestador do serviço
+    if current_user.id == @contract.service_id.user_id # Verifica se o usuário logado é o prestador do serviço
       if @contract.update(status: new_status)
-        redirect_to dashboard_path(@contract), notice: 'Contrato atualizado com sucesso.'
+        redirect_to dashboard_path(@contract), notice: 'Contract updated successfully.'
       else
         render :edit
       end
     else
-      redirect_to dashboard_path(@contract), notice: 'Você não tem permissão para alterar este contrato.'
+      redirect_to dashboard_path(@contract), notice: 'You are not permitted to change this agreement.'
     end
   end
 
   # Ação personalizada para marcar o contrato como concluído
   def done
-    if current_user.id == @contract.service.user_id # Verifica se o usuário logado é o prestador do serviço
+    if current_user.id == @contract.service_id.user_id # Verifica se o usuário logado é o prestador do serviço
       @contract.update(done: true)
-      redirect_to dashboard_path(@contract), notice: 'Contrato concluído com sucesso.'
+      redirect_to dashboard_path(@contract), notice: 'Contract completed successfully.'
     else
-      redirect_to dashboard_path(@contract), notice: 'Você não tem permissão para marcar este contrato como concluído.'
+      redirect_to dashboard_path(@contract), notice: 'You are not allowed to mark this contract as complete.'
     end
   end
 
