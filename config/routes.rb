@@ -24,4 +24,7 @@ Rails.application.routes.draw do
   get "users/:id/edit", to: "users#edit", as: :edit_user
   patch "users/:id", to: "users#update"
 
+  resources :conversations do
+    resources :messages
+  end
 end
