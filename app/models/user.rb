@@ -6,4 +6,5 @@ class User < ApplicationRecord
   has_many :services
   has_many :contracts
   validates :email, uniqueness: true
+  has_many :conversations, foreign_key: :sender_id
 end
