@@ -8,7 +8,7 @@
               <%= service.name_service %>
             </div>
             <div class="card-body">
-            <% if service.photo.attached? %>
+ <% if service.photo.attached? %>
               <%= cl_image_tag service.photo.key, height: 300, width: 400, crop: :fill %>
                            <p><%= service.description_service %></p>
               <% end %>
@@ -18,7 +18,7 @@
               <h1><%=user.email%></h1>
 
               <a href="#" class="btn btn-primary" style="border-radius: 5px; width: 100px">Contract</a>
-              <%= link_to "Update Service", edit_service_path(service.id), class: "btn btn-primary" %>
+              <%= button_to "Chat", conversations_path(sender_id: current_user.id, recipient_id: user.id), data: { "turbo-method": :post } %>
             </div>
           </div>
           <% end %>

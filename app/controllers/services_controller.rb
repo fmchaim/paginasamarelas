@@ -34,7 +34,7 @@ class ServicesController < ApplicationController
   def create
     @service = current_user.services.create(service_params)
     if @service.save
-      redirect_to @service
+      redirect_to dashboard_path(current_user)
     else
       render :new
     end

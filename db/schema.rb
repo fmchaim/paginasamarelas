@@ -54,6 +54,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_215418) do
     t.index ["user_id"], name: "index_contracts_on_user_id"
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "recipient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.bigint "conversation_id"
+    t.bigint "user_id"
+    t.boolean "read", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.bigint "contract_id", null: false
     t.string "comment"
@@ -86,11 +104,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_02_215418) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "first_name"
     t.string "last_name"
+    t.string "phone"
     t.string "city"
     t.string "state"
-    t.integer "phone"
+    t.string "first_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

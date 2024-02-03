@@ -5,11 +5,9 @@ Rails.application.routes.draw do
 
   resources :services
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  resources :contracts, only: [:index, :show, :new, :create, :update] do
+  resources :contracts, only: [:index, :show, :new, :create, :edit, :update] do
     member do
-      patch 'accept'
-      patch 'reject'
-      patch 'done'
+      patch :update
     end
   end
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -24,4 +22,7 @@ Rails.application.routes.draw do
   get "users/:id/edit", to: "users#edit", as: :edit_user
   patch "users/:id", to: "users#update"
 
+  resources :conversations do
+    resources :messages
+  end
 end

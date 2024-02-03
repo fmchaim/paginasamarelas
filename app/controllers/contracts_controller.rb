@@ -1,10 +1,10 @@
 class ContractsController < ApplicationController
   before_action :set_service, only: [:new, :create]
-  before_action :set_contract, only: [:show, :accept, :reject, :done]
+  before_action :set_contract, only: [:show, :edit, :update, :done]
   before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    @contracts = Contract.all
+    @contracts = Contract.where('user_id = ? OR service_id = ?', current_user.id, @contract.service_id.user_id)
   end
 
   def show
@@ -21,39 +21,39 @@ class ContractsController < ApplicationController
     @contract.service = @service # Atribuindo o serviço ao contrato
 
     if @contract.save
-      redirect_to dashboard_path(@contract), notice: 'Contrato criado com sucesso.'
+      redirect_to dashboard_path(@contract), notice: 'contract created successfully!'
     else
-      render :new, status: :unprocessable_entity, notice: 'Não foi possível criar o contrato.'
+      render :new, status: :unprocessable_entity, notice: 'Unable to create contract.'
     end
   end
 
-  # Ação personalizada para aceitar o contrato
-  def accept
-    if current_user.id == @contract.service.user_id # Verifica se o usuário logado é o prestador do serviço
-      @contract.update(status: 'Accept')
-      redirect_to dashboard_path(@contract), notice: 'Contrato aceito com sucesso.'
-    else
-      redirect_to dashboard_path(@contract), notice: 'Você não tem permissão para aceitar este contrato.'
-    end
+  def edit
+    render :show
   end
 
-  # Ação personalizada para negar o contrato
-  def reject
-    if current_user.id == @contract.service.user_id # Verifica se o usuário logado é o prestador do serviço
-      @contract.update(status: 'Decline')
-      redirect_to dashboard_path(@contract), notice: 'Contrato negado com sucesso.'
+  # Ação personalizada para aceitar ou rejeitar o contrato
+  def update
+    @contract = Contract.find(params[:id])
+    new_status = params[:status] # 'accept' ou 'decline'
+
+    if current_user.id == @contract.service_id.user_id # Verifica se o usuário logado é o prestador do serviço
+      if @contract.update(status: new_status)
+        redirect_to dashboard_path(@contract), notice: 'Contract updated successfully.'
+      else
+        render :edit
+      end
     else
-      redirect_to dashboard_path(@contract), notice: 'Você não tem permissão para negar este contrato.'
+      redirect_to dashboard_path(@contract), notice: 'You are not permitted to change this agreement.'
     end
   end
 
   # Ação personalizada para marcar o contrato como concluído
   def done
-    if current_user.id == @contract.service.user_id # Verifica se o usuário logado é o prestador do serviço
+    if current_user.id == @contract.service_id.user_id # Verifica se o usuário logado é o prestador do serviço
       @contract.update(done: true)
-      redirect_to dashboard_path(@contract), notice: 'Contrato concluído com sucesso.'
+      redirect_to dashboard_path(@contract), notice: 'Contract completed successfully.'
     else
-      redirect_to dashboard_path(@contract), notice: 'Você não tem permissão para marcar este contrato como concluído.'
+      redirect_to dashboard_path(@contract), notice: 'You are not allowed to mark this contract as complete.'
     end
   end
 
@@ -71,3 +71,6 @@ class ContractsController < ApplicationController
     @contract = Contract.find(params[:id])
   end
 end
+
+# <%= link_to 'Accept', update_status_contract_path(@contract, status: 'accept'), method: :patch %> <--- PARA A VIEW
+# <%= link_to 'Decline', update_status_contract_path(@contract, status: 'decline'), method: :patch %> <--- PARA A VIEW
