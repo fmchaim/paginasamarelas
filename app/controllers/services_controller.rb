@@ -2,7 +2,6 @@ require 'csv'
 class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :edit, :update, :destroy]
 
-
   def index
     @services = Service.where("category LIKE ?", "%#{params[:search]}%")
     @categorys = CSV.read(Rails.root.join('db', 'category.csv')).flatten
@@ -50,7 +49,7 @@ class ServicesController < ApplicationController
 
   def service_params
     params.require(:service).permit(:name_service, :description_service,
-                                    :photos, :category, :price, :user_id)
+                                    :photo, :category, :price, :user_id)
   end
 
 
