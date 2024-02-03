@@ -8,7 +8,7 @@
               <%= service.name_service %>
             </div>
             <div class="card-body">
-             <% if service.photo.attached? %>
+ <% if service.photo.attached? %>
               <%= cl_image_tag service.photo.key, height: 300, width: 400, crop: :fill %>
                            <p><%= service.description_service %></p>
               <% end %>
@@ -28,6 +28,7 @@
     </section>
 
     <%= link_to "New Service", new_service_path, class: "btn btn-primary" %>
+
 
 
     <style>
