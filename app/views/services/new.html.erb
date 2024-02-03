@@ -8,7 +8,7 @@
           <%= f.input :description_service, label: 'Description', placeholder: 'I fix and install lights' %>
           <%= f.input :category, collection: @categorys%>
           <%= f.input :photo, as: :file %>
-          <%= f.input :address, label: 'Address', placeholder: 'Av. Paulista, São Paulo' %>
+          <%= f.input :address, label: 'Address', placeholder: 'Street, Number, City' %>
           <%= f.input :price, placeholder: '$' %>
 
           <%= f.button :submit, "Add Service", class:"btn-yellow" %>

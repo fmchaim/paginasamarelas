@@ -6,7 +6,7 @@ class PagesController < ApplicationController
     @markers = @services.geocoded.map do |service|
       {
         lat: service.latitude,
-        lng: service.longitude
+        lng: service.longitude,
       }
     end
   end
