@@ -1,9 +1,9 @@
 <div class="container">
-  <div data-controller="show-services show-contracts show-profile">
+  <div data-controller="show-dashboard">
     <div class="row mx-auto">
 
       <div class="col-sm dashboard-card">
-        <button class="dashboard-button" id="profile-btn" data-action="click->show-profile#show">
+        <button class="dashboard-button" id="profile-btn" data-action="click->show-dashboard#profile">
           <div class="card-info">
             <h5>Profile</h5>
             <p class="description">Edit your name, photo, state, city and phone number</p>
@@ -12,7 +12,7 @@
       </div>
 
       <div class="col-sm dashboard-card">
-        <button class="dashboard-button" id="service-btn" data-action="click->show-services#show">
+        <button class="dashboard-button" id="service-btn" data-action="click->show-dashboard#services">
           <div class="card-info">
             <h5>My Services</h5>
             <p class="description">Edit and see your created and hired services</p>
@@ -21,7 +21,7 @@
       </div>
 
       <div class="col-sm dashboard-card">
-        <button class="dashboard-button" id="contract-btn" data-action="click->show-contracts#show">
+        <button class="dashboard-button" id="contract-btn" data-action="click->show-dashboard#contracts">
           <div class="card-info">
             <h5>My Contracts</h5>
             <p class="description">Manage the status of your created or hired contracts</p>
@@ -30,7 +30,7 @@
       </div>
 
       <div class="col-sm dashboard-card">
-        <button class="dashboard-button" id="review-btn">
+        <button class="dashboard-button" id="review-btn" data-action="click->show-dashboard#reviews">
           <div class="card-info">
             <h5>My Reviews</h5>
             <p class="description">Check the reviews you have received</p>
@@ -42,16 +42,31 @@
     <div class="col">
       <div class="row mx-auto">
 
-        <div class="col-sm dashboard-card-static">
+        <div class="col-sm">
 
-          <%# ESCREVER SHOW EDIT PROFILE %>
+          <div data-show-dashboard-target="profileElement" class="mt-5 d-none">
+            <%= simple_form_for @user do |f| %>
+              <%= f.input :first_name, required: true %>
+              <%= f.input :last_name, required: true %>
+              <%= f.input :photo, as: :file %>
+              <%= f.input :city, required: true %>
+              <%= f.input :state, required: true %>
+              <%= f.input :phone, required: true %>
 
-          <div data-show-services-target="serviceElement" class="d-none">
-            <%= render 'services/index' %>
-            <%= link_to "Add a Service", new_service_path, class: "btn-yellow"%>
+              <%= f.button :submit, "Update", class:"btn-yellow" %>
+            <% end %>
           </div>
 
-          <div data-show-contracts-target="contractElement" class="d-none">
+          <div data-show-dashboard-target="serviceElement" class="my-5 d-none">
+           <%= link_to "Add a Service", new_service_path, class: "btn-yellow"%>
+            <% if @services %>
+              <%= render 'services/my_services' %>
+            <% else %>
+              <h3>You have 0 services.</h3>
+            <% end %>
+          </div>
+
+          <div data-show-dashboard-target="contractElement" class="my-5 d-none">
             <%= render 'contracts/show' %>
           </div>
 
