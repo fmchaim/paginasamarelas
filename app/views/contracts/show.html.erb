@@ -1,0 +1,15 @@
+<div class="page-header">
+
+  <h1>Parabéns! Seu contrato foi criado com sucesso! Fique atento(a) a sua caixa de mensagens, pois por lá você poderá conversar diretamente com o prestador do serviço.</h1>
+
+  <h1>Detalhes do Contrato</h1>
+
+  <p><strong>Usuário Contratante:</strong> <%= @contract.user.first_name %> <%= @contract.user.last_name %></p>
+  <p><strong>Serviço Contratado:</strong> <%= @contract.service.name_service %></p>
+  <p><strong>Usuário Prestador do Serviço:</strong> <%= @contract.service.user_id.first_name %> <%= @contract.service.user_id.last_name %></p>
+  <p><strong>Data do Contrato:</strong> <%= @contract.date %></p>
+  <p><strong>Status:</strong> <%= @contract.status %></p>
+  <p><strong>Concluído:</strong> <%= @contract.done ? 'Sim' : 'Não' %></p>
+
+  <%= link_to 'Voltar para Contratos', contracts_path %>
+</div>
