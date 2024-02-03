@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <h2 class="text-center mt-4 mb-4 p-0">Add a Service</h2>
+    <div class="col-12 col-md-6 offset-lg-3 mb-5">
+      <div class="bg-white rounded p-3 shadow">
+        <%= simple_form_for @service do |f| %>
+          <%= f.input :name_service, label: 'Title', placeholder: 'Electrician' %>
+          <%= f.input :description_service, label: 'Description', placeholder: 'I fix and install lights' %>
+          <%= f.input :category, collection: @categorys%>
+          <%= f.input :photo, as: :file %>
+          <%= f.input :address, label: 'Address', placeholder: 'Street, Number, City' %>
+          <%= f.input :price, placeholder: '$' %>
+          <%= f.button :submit, class:"btn-yellow" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

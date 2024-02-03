@@ -15,6 +15,12 @@ class ServicesController < ApplicationController
   end
   end
 
+
+  def servdashboard
+    @services = Service.all
+  end
+
+
   def show
   end
 
@@ -44,7 +50,7 @@ class ServicesController < ApplicationController
 
   def destroy
     @service.destroy
-    redirect_to lists_path
+    #redirect_to lists_path
   end
 
   private
