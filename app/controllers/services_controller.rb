@@ -3,7 +3,6 @@ class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, only: :index
 
-
   def index
     if params[:search].present? and params[:city].present?
       @services = Service.joins(:user).where('category LIKE ? or city LIKE ?', "%#{params[:search]}%", "%#{params[:city]}%")
@@ -56,7 +55,7 @@ class ServicesController < ApplicationController
 
   def service_params
     params.require(:service).permit(:name_service, :description_service,
-                                    :photos, :category, :price, :user_id)
+                                    :photo, :category, :price, :user_id)
   end
 
 

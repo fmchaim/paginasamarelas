@@ -5,5 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :services
   has_many :contracts
+  has_one_attached :photo
+
   validates :email, uniqueness: true
+
 end
