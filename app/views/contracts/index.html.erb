@@ -1,0 +1,19 @@
+<div class="container">
+
+  <h1>Meus Contratos</h1>
+
+  <% @contracts.each do |contract| %>
+    <% if current_user == contract.user_id %>
+      <p><%= contract.service.name_service %></p>
+      <p><%= contract.service.description_service %></p>
+      <p><%= contract.service.user_id.first_name %></p>
+      <p><%= contract.status %></p>
+    <% elsif current_user == contract.service.user_id %>
+      <p><%= contract.service.name_service %></p>
+      <p><%= contract.service.description_service %></p>
+      <p><%= contract.user_id.first_name %></p>
+      <p><%= contract.status %></p>
+    <% end %>
+    <%# <%= link_to "See more details",  %> CHAMAR ROTA DE SHOW
+  <% end %>
+</div>

@@ -4,11 +4,13 @@ class ContractsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    @contracts = Contract.all
+    @contracts = Contract.where('user_id = ?', current_user.id)
+
+    # @contracts = current_user.contracts
   end
 
   def show
-    @contract = Contract.where('service_id = ? OR user_id = ?', @contract.service_id, current_user.id)
+    @contract = Contract.where('service_id = ?', @contract.service_id)
   end
 
   def new
