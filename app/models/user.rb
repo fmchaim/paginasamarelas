@@ -8,5 +8,5 @@ class User < ApplicationRecord
   has_one_attached :photo
 
   validates :email, uniqueness: true
-
+  has_many :conversations, foreign_key: :sender_id
 end
