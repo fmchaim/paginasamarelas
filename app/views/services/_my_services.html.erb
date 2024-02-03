@@ -1,45 +1,36 @@
-    <section>
-      <div class="row">
-        <div class="col-md-8 w-100">
-          <% @services.each do |service| %>
+<section class="container">
+  <div class="row">
+    <div class="col-md-8 w-100 px-0">
+      <% @services.each do |service| %>
+        <div class="card-my-services my-4">
           <% user = User.find(service.user_id)%>
-          <div class="card-services">
-            <div class="card-header">
-              <%= service.name_service %>
-            </div>
-            <div class="card-body">
-              <p><%= service.category %></p>
-              <p><%= service.price %></p>
-              <p><%= service.address %></p>
+            <div class="service-body d-flex">
 
-              <a href="#" class="btn btn-primary" style="border-radius: 5px; width: 100px">Contract</a>
+              <div class="service-ph">
+                <% if service.photo.attached? %>
+                  <%= cl_image_tag service.photo.key, height: 200, width: 200, crop: :fill %>
+                <% end %>
+              </div>
+
+              <div class="service-info ms-4">
+                <p class="tag-yellow mb-1"><%= service.category %></p>
+                <div class="title-service">
+                  <%= service.name_service %>
+                </div>
+
+                <p class="pt-2"><%= service.description_service %></p>
+                <p>$ <%= service.price %></p>
+                <p><%= service.address %></p>
+
+                <div class="service-btn d-flex">
+                <%= link_to "Edit Service", edit_service_path(current_user), class: "btn-yellow" %>
+                <%= button_to "Delete", conversations_path(sender_id: current_user.id, recipient_id: user.id), data: { "turbo-method": :post }, class:"btn-red-outline ms-2" %>
+                </div>
+              </div>
+
             </div>
-          </div>
-          <% end %>
         </div>
-      </div>
-
-    </section>
-
-    <style>
-      .card-services {
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 10px;
-      }
-
-      .card-header {
-        background-color: #f5f5f5;
-        padding: 10px;
-        border-bottom: 1px solid #ccc;
-      }
-
-      .card-body {
-        padding: 10px;
-      }
-
-      .btn {
-        margin-top: 10px;
-      }
-    </style>
+      <% end %>
+    </div>
+  </div>
+</section>

@@ -18,16 +18,12 @@
               <p><%=user.email%></p>
               <p><%=user.phone%></p>
 
-              <a href="#" class="btn btn-primary" style="border-radius: 5px; width: 100px">Contract</a>
-              <%= button_to "Chat", conversations_path(sender_id: current_user.id, recipient_id: user.id), data: { "turbo-method": :post } %>
             </div>
-          </div>
-          <% end %>
         </div>
       </div>
 
     </div>
-
+</div>
 
 
 
