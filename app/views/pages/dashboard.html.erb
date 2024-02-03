@@ -1,0 +1,65 @@
+<div class="container">
+  <div data-controller="show-services show-contracts show-profile">
+    <div class="row mx-auto">
+
+      <div class="col-sm dashboard-card">
+        <button class="dashboard-button" id="profile-btn" data-action="click->show-profile#show">
+          <div class="card-info">
+            <h5>Profile</h5>
+            <p class="description">Edit your name, photo, state, city and phone number</p>
+          </div>
+        </button>
+      </div>
+
+      <div class="col-sm dashboard-card">
+        <button class="dashboard-button" id="service-btn" data-action="click->show-services#show">
+          <div class="card-info">
+            <h5>My Services</h5>
+            <p class="description">Edit and see your created and hired services</p>
+          </div>
+        </button>
+      </div>
+
+      <div class="col-sm dashboard-card">
+        <button class="dashboard-button" id="contract-btn" data-action="click->show-contracts#show">
+          <div class="card-info">
+            <h5>My Contracts</h5>
+            <p class="description">Manage the status of your created or hired contracts</p>
+          </div>
+        </button>
+      </div>
+
+      <div class="col-sm dashboard-card">
+        <button class="dashboard-button" id="review-btn">
+          <div class="card-info">
+            <h5>My Reviews</h5>
+            <p class="description">Check the reviews you have received</p>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="row mx-auto">
+
+        <div class="col-sm dashboard-card-static">
+
+          <%# ESCREVER SHOW EDIT PROFILE %>
+
+          <div data-show-services-target="serviceElement" class="d-none">
+            <%= render 'services/index' %>
+            <%= link_to "Add a Service", new_service_path, class: "btn-yellow"%>
+          </div>
+
+          <div data-show-contracts-target="contractElement" class="d-none">
+            <%= render 'contracts/show' %>
+          </div>
+
+          <%# ESCREVER INDEX REVIEWS %>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

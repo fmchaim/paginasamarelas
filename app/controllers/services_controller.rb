@@ -1,11 +1,18 @@
 require 'csv'
 class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :authenticate_user!, only: :index
 
   def index
-    @services = Service.where("category LIKE ?", "%#{params[:search]}%")
-    @categorys = CSV.read(Rails.root.join('db', 'category.csv')).flatten
+    if params[:search].present? and params[:city].present?
+      @services = Service.joins(:user).where('category LIKE ? or city LIKE ?', "%#{params[:search]}%", "%#{params[:city]}%")
+    else
+      if params[:search].present?
+        @services = Service.where('category LIKE ?', "%#{params[:search]}%")
+      else
+        @services = Service.all
+    end
+  end
   end
 
   def show
@@ -13,8 +20,6 @@ class ServicesController < ApplicationController
 
   def new
     @service = Service.new
-    @categorys = CSV.read(Rails.root.join('db', 'category.csv')).flatten
-    #@user = User.new(service: @service)
   end
 
   def edit
@@ -50,7 +55,7 @@ class ServicesController < ApplicationController
 
   def service_params
     params.require(:service).permit(:name_service, :description_service,
-                                    :photos, :category, :price, :user_id)
+                                    :photo, :category, :price, :user_id)
   end
 
 

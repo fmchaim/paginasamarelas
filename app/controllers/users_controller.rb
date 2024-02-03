@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to @user
+      redirect_to dashboard_path(current_user)
     else
       flash.now[:alert] = 'There was a problem updating the User.'
       @errors = @user.errors.full_messages
@@ -39,6 +39,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :city, :state, :phone, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :city, :state, :phone, :photo, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at)
   end
 end
