@@ -12,6 +12,8 @@ class PagesController < ApplicationController
   end
 
   def dashboard
+    @services = current_user.services
+    @user = current_user
   end
 
 end
