@@ -15,6 +15,12 @@ class ServicesController < ApplicationController
   end
   end
 
+
+  def servdashboard
+    @services = Service.all
+  end
+
+
   def show
   end
 
@@ -36,7 +42,7 @@ class ServicesController < ApplicationController
 
   def update
     if @service.update(service_params)
-      redirect_to @service
+      redirect_to dashboard_path(current_user)
     else
       render :edit
     end
@@ -44,7 +50,6 @@ class ServicesController < ApplicationController
 
   def destroy
     @service.destroy
-    redirect_to lists_path
   end
 
   private
@@ -55,7 +60,7 @@ class ServicesController < ApplicationController
 
   def service_params
     params.require(:service).permit(:name_service, :description_service,
-                                    :photo, :category, :price, :user_id)
+                                    :photo, :category, :price, :address, :user_id)
   end
 
 
