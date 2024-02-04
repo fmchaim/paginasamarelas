@@ -3,11 +3,12 @@ Rails.application.routes.draw do
   root to: "pages#home"
   get "users/:id/dashboard", to: "pages#dashboard", as: :dashboard
 
-  resources :services
+  resources :services do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  resources :contracts, only: [:index, :show, :new, :create, :edit, :update] do
-    member do
-      patch :update
+    resources :contracts, only: [:index, :show, :new, :create, :edit, :update] do
+      member do
+        patch :update
+      end
     end
   end
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -21,6 +22,8 @@ Rails.application.routes.draw do
   get "users/:id", to: "users#show", as: :user
   get "users/:id/edit", to: "users#edit", as: :edit_user
   patch "users/:id", to: "users#update"
+
+ patch "contracts/:id/update_status", to: "contracts#update_status", as: :update_status
 
   resources :conversations do
     resources :messages

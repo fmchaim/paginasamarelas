@@ -10,12 +10,26 @@
   <p><strong>Data do Contrato:</strong> <%= @contract.date %></p>
 
   <% if current_user == contract.user_id %>
+
     <p><strong>Status:</strong> <%= @contract.status %></p>
+
     <p><strong>Concluído:</strong> <%= @contract.done ? 'Sim' : 'Não' %></p>
+
   <% elsif current_user == contract.service_id.user_id %>
+
     <% if @contract.status == "Pending" %>
-      <p><strong>Status:</strong><%= @contract.status %></p> <%# Fazer como o usuário PS vai aceitar ou rejeitar o contrato %>
+
+      <p><strong>Status:</strong><%= button_to 'Accept', update_status_path(id: @contract.id, status: 'accept'), method: :patch, data: { "turbo-method": :patch } %> <%= link_to 'Reject', update_status_path(id: @contract.id, status: 'reject'), method: :patch, data: { "turbo-method": :patch } %></p>
+
       <p><strong>Concluído:</strong> <%= @contract.done ? 'Sim' : 'Não' %></p>
+
   <% end %>
   <%= link_to 'Voltar para Contratos', contracts_path %>
 </div>
+
+
+
+
+
+<%# <%= link_to 'Accept', accept_contract_path(@contract), method: :post, data: { confirm: 'Are you sure you want to accept this contract?' } %>
+<%# <%= link_to 'Rejeitar Contrato', reject_contract_path(@contract), method: :post, data: { confirm: 'Are you sure you want to reject this contract?' } %>

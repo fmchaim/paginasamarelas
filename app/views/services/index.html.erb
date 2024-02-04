@@ -17,7 +17,8 @@
               <p><%= service.address %></p>
               <h1><%=user.email%></h1>
 
-              <a href="#" class="btn btn-primary" style="border-radius: 5px; width: 100px">Contract</a>
+              <%= link_to "Contract", new_service_contract_path(service_id: service.id) %>
+              <a href="contracts/new" class="btn btn-primary" style="border-radius: 5px; width: 100px">Contract</a>
               <%= button_to "Chat", conversations_path(sender_id: current_user.id, recipient_id: user.id), data: { "turbo-method": :post } %>
             </div>
           </div>
