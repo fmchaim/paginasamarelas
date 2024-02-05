@@ -11,8 +11,8 @@ class ServicesController < ApplicationController
         @services = Service.where('category LIKE ?', "%#{params[:search]}%")
       else
         @services = Service.all
+      end
     end
-  end
   end
 
 

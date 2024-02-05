@@ -1,0 +1,82 @@
+<div class="card">
+
+  <div class="card-body">
+    <% @contracts = Contract.where('user_id = ? OR service_id IN (?)', current_user.id, current_user.services.pluck(:id)) %>
+
+    <% if @contracts.present? && @contracts.any? %>
+      <% customer_contracts = @contracts.select { |contract| current_user.id == contract.user.id } %>
+
+      <% if customer_contracts.present? %>
+        <% customer_contracts.each do |contract| %>
+
+        <div class="service-info ms-4 border border-2 px-5 py-2">
+          <div class="title-service">
+            <%= "Contratos como cliente" %>
+          </div>
+
+          <p class="pt-2"><strong><%= "Serviço: "%></strong> <%= "#{contract.service.name_service}" %></p>
+          <p><strong><%= "Descrição: " %></strong> <%= "#{contract.service.description_service}" %></p>
+          <p><strong><%= "Prestador: " %></strong> <%= "#{contract.service.user.first_name} #{contract.service.user.last_name}" %></p>
+          <p><strong><%= "Status: "%></strong> <%= "#{contract.status}" %></p>
+          <p><strong><%= "Data: "%></strong> <%= "#{contract.date}" %></p>
+
+          <%= link_to "See more details", service_contract_path(contract.service.id) %>
+
+        </div>
+          <%#<p class="card-text"><%= "Serviço: #{contract.service.name_service}" %></p>
+          <%#<p class="card-text"><%= "Descrição: #{contract.service.description_service}" %></p>
+          <%#<p class="card-text"><%= "Prestador: #{contract.service.user.first_name} #{contract.service.user.last_name}" %></p>
+          <%#<p class="card-text"><%= "Status: #{contract.status}" %></p>
+          <%#<p class="card-text"><%= "Data: #{contract.date}" %></p>
+
+        <% end %>
+
+      <% else %>
+
+        <div class="service-info ms-4 border border-2 px-5 py-2">
+          <div class="title-service">
+            <%= "Contratos como cliente" %>
+          </div>
+          <p>You have no contracts as a customer</p>
+        </div>
+
+      <% end %>
+    <% else %>
+
+      <p>No contracts available</p>
+
+    <% end %>
+  </div>
+
+  <% if @contracts.present? && @contracts.any? %>
+    <% provider_contracts = @contracts.select { |contract| current_user.id == contract.service.user.id } %>
+
+    <% if provider_contracts.present? %>
+      <% provider_contracts.each do |contract| %>
+
+        <div class="service-info ms-4 border border-2 px-5 py-2">
+          <div class="title-service">
+            <%= "Contratos como prestador de serviços" %>
+          </div>
+
+          <p><%= "Serviço: " %> <%= "#{contract.service.name_service}" %></p>
+          <p><%= "Descrição: " %> <%= "#{contract.service.description_service}" %></p>
+          <p><%= "Cliente: " %> <%= " #{contract.user.first_name} #{contract.user.last_name}" %></p>
+          <p><%= "Status: " %> <%= "#{contract.status}" %></p>
+          <%= link_to "See more details", service_contract_path(id: contract.id) %>
+        </div>
+      <% end %>
+    <% else %>
+
+      <div class="service-info ms-4 border border-2 px-5 py-2">
+        <div class="title-service">
+          <%= "Contratos como prestador de serviços" %>
+        </div>
+
+        <p>You have no contracts as a service provider</p>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No contracts available</p>
+  <% end %>
+</div>
