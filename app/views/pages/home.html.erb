@@ -49,6 +49,7 @@
           window.location.href = '/services?search=' + encodeURIComponent(searchTerm);
         }
         </script>
+
     </div>
   </div>
 </div>
@@ -70,6 +71,7 @@
               <p class="card-text mt-2">“I had a great experience with this company. They were very professional and did a great job. I would highly recommend them.”</p>
             </div>
           </div>
+        </div> 
       </div>
 
         <div class="col-md-4">
@@ -81,7 +83,7 @@
               <p class="card-text mt-2">“Exceptional service and expertise, the company consistently delivers efficient and reliable solutions, ensuring my appliance works smoothly every time.”</p>
             </div>
           </div>
-      </div>
+        </div>
 
         <div class="col-md-4">
 
@@ -97,18 +99,16 @@
     </div>
   </div>
 
-    <div class="container">
-      <div class="home-map text-center">
-        <h2 class="home-title mb-5">Discover local business in your area</h2>
+  <div class="container">
+    <div class="home-map text-center">
+      <h2 class="home-title mb-5">Discover local business in your area</h2>
 
-        <div class="map mb-5 mx-auto">
-          <div style="width: 100%; height: 500px;"
-          data-controller="map"
-          data-map-markers-value="<%= @markers.to_json %>"
-          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+      <div class="map mb-5 mx-auto">
+        <div style="width: 100%; height: 500px;"
+        data-controller="map"
+        data-map-markers-value="<%= @markers.to_json %>"
+        data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
         </div>
-
       </div>
     </div>
   </div>
-</div>

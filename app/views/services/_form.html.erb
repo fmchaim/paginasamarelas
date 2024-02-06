@@ -8,7 +8,11 @@
           <%= f.input :description_service, label: 'Description', placeholder: 'I fix and install lights' %>
           <%= f.input :category, collection: @categorys%>
           <%= f.input :photo, as: :file %>
-          <%= f.input :address, label: 'Address', placeholder: 'Street, Number, City' %>
+          <%= f.input :address,
+            input_html: {data: {address_autocomplete_target: "address"}},
+            wrapper_html: {data: {controller: "address-autocomplete",
+            address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}}
+          %>
           <%= f.input :price, placeholder: '$' %>
           <%= f.button :submit, class:"btn-yellow" %>
         <% end %>

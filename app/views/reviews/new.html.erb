@@ -1,0 +1,7 @@
+<div class="container mt-3">
+  <%= simple_form_for [@user, @service, @contract, @review] do |f| %>
+    <%= f.select :rating, 1..5 %> <i class="fa-regular fa-star"></i>
+    <%= f.input :comment, as: :text %>
+    <%= f.button :submit, "Submit Review" %>
+  <% end %>
+</div>
