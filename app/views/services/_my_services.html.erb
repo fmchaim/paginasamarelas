@@ -23,7 +23,7 @@
                 <p><%= service.address %></p>
 
                 <div class="service-btn d-flex">
-                <%= link_to "Edit Service", edit_service_path(current_user), class: "btn-yellow" %>
+                <%= link_to "Edit Service", edit_user_service_path(current_user, service_id: service.id), class: "btn-yellow" %>
                 <%= button_to "Delete", conversations_path(sender_id: current_user.id, recipient_id: user.id), data: { "turbo-method": :post }, class:"btn-red-outline ms-2" %>
                 </div>
               </div>

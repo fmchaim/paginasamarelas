@@ -2,64 +2,32 @@
 
   <h1>Meus Contratos</h1>
 
-  <% @contracts.each do |contract| %>
+    <% @contracts.each do |contract| %>
+      <div class="card">
+        <h3>Contracts as a customer</h3>
 
-    <h2>Contratos como cliente</h2>
+        <% if current_user.id == contract.user.id %>
+          <p><%= contract.service.name_service %></p>
+          <p><%= contract.service.description_service %></p>
+          <p><%= contract.service.user.first_name %> <%= contract.service.user.last_name %></p>
+          <p><%= contract.status %></p>
+          <p><%= contract.date %></p>
+          <%= link_to "See more details", service_contract_path(service_id: contract.service.id, id: contract.id) %>
+        <% else %>
+          <p>You have no contracts</p>
+        <% end %>
 
-    <% if current_user == contract.user_id %>
-      <p><%= contract.service.name_service %></p>
-      <p><%= contract.service.description_service %></p>
-      <p><%= contract.service.user_id.first_name %></p>
-      <p><%= contract.status %></p>
+      <h3>Contracts as a service provider</h3>
 
-      <%# <%= link_to "See more details",  %> CHAMAR ROTA DE SHOW
-    <% else %>
-      <p>You have no contracts</p>
-    <% end %>
+      <% if current_user.id == contract.service.user.id %>
+        <p><%= contract.service.name_service %></p>
+        <p><%= contract.service.description_service %></p>
+        <p><%= contract.user.first_name %></p>
+        <p><%= contract.status %></p>
 
-    <h2>Contratos como prestador de serviços</h2>
-    
-    <% if current_user == contract.service_id.user_id %>
-      <p><%= contract.service.name_service %></p>
-      <p><%= contract.service.description_service %></p>
-      <p><%= contract.user_id.first_name %></p>
-      <p><%= contract.status %></p>
-
-      <%# <%= link_to "See more details",  %> CHAMAR ROTA DE SHOW
-    <% else %>
-      <p>You have no contracts</p>
-    <% end %>
+        <%= link_to "See more details", service_contract_path(contract.service.id) %>
+      <% else %>
+        <p>You have no contracts</p>
+      <% end %>
   <% end %>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<%# <% if current_user == contract.user_id %>
-      <%#<p><%= contract.service.name_service %></p>
-      <%#<p><%= contract.service.description_service %></p>
-      <%#<p><%= contract.service.user_id.first_name %></p>
-      <%#<p><%= contract.status %></p>
-    <%#<% elsif current_user == contract.service.user_id %>
-      <%#<p><%= contract.service.name_service %></p>
-      <%#<p><%= contract.service.description_service %></p>
-      <%#<p><%= contract.user_id.first_name %></p>
-      <%#<p><%= contract.status %></p>
-    <%#<% end %>

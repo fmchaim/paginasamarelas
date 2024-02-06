@@ -23,7 +23,8 @@
                 <p><%= service.address %></p>
 
                 <div class="service-btn d-flex">
-                <%= link_to "Hire", edit_service_path(current_user), class: "btn-yellow" %>
+                <%= link_to "Hire",  new_user_service_contract_path(user_id: current_user.id, service_id: service.id), class: "btn-yellow" %> <%# redireciona o usuário para a new de contrato %>
+                <%# <%= link_to "Hire", edit_service_path(current_user), class: "btn-yellow" %>
                 <%= button_to "Message", conversations_path(sender_id: current_user.id, recipient_id: user.id), data: { "turbo-method": :post }, class:"btn-yellow-outline ms-2" %>
                 </div>
               </div>
