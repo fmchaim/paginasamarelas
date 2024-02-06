@@ -13,10 +13,10 @@ class ServicesController < ApplicationController
         @services = Service.all
       end
     end
-    @markers = @flats.geocoded.map do |flat|
+    @markers = @services.geocoded.map do |service|
       {
-        lat: flat.latitude,
-        lng: flat.longitude,
+        lat: service.latitude,
+        lng: service.longitude,
         info_window_html: render_to_string(partial: "info_window", locals: { service: service })
       }
     end
