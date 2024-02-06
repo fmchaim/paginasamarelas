@@ -5,10 +5,10 @@ class ServicesController < ApplicationController
 
   def index
     if params[:search].present? and params[:city].present?
-      @services = Service.joins(:user).where('category LIKE ? or city LIKE ?', "%#{params[:search]}%", "%#{params[:city]}%")
+      @services = Service.joins(:user).where('category ILIKE ? or city ILIKE ?', "%#{params[:search]}%", "%#{params[:city]}%")
     else
       if params[:search].present?
-        @services = Service.where('category LIKE ?', "%#{params[:search]}%")
+        @services = Service.where('category ILIKE ?', "%#{params[:search]}%")
       else
         @services = Service.all
     end

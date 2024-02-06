@@ -8,7 +8,7 @@
 
               <div class="service-ph">
                 <% if service.photo.attached? %>
-                  <%= cl_image_tag service.photo.key, height: 200, width: 200, crop: :fill %>
+                 <%= cl_image_tag service.photo.key, height: 200, width: 200, crop: :fill %>
                 <% end %>
               </div>
 
@@ -23,8 +23,8 @@
                 <p><%= service.address %></p>
 
                 <div class="service-btn d-flex">
-                <%= link_to "Hire", edit_service_path(current_user), class: "btn-yellow" %>
-                <%= button_to "Message", conversations_path(sender_id: current_user.id, recipient_id: user.id), data: { "turbo-method": :post }, class:"btn-yellow-outline ms-2" %>
+                <%= link_to "Hire", '', class: "btn-yellow" %>
+                <%= button_to "Message", conversations_path(sender_id: current_user, recipient_id: user.id), data: { "turbo-method": :post }, class:"btn-yellow-outline ms-2" %>
                 </div>
               </div>
 
