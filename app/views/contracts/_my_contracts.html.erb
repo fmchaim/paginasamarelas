@@ -11,23 +11,26 @@
 
         <div class="service-info ms-4 border border-2 px-5 py-2">
           <div class="title-service">
-            <%= "Contratos como cliente" %>
+            <%= "Contracts as a customer" %>
           </div>
 
-          <p class="pt-2"><strong><%= "Serviço: "%></strong> <%= "#{contract.service.name_service}" %></p>
-          <p><strong><%= "Descrição: " %></strong> <%= "#{contract.service.description_service}" %></p>
-          <p><strong><%= "Prestador: " %></strong> <%= "#{contract.service.user.first_name} #{contract.service.user.last_name}" %></p>
-          <p><strong><%= "Status: "%></strong> <%= "#{contract.status}" %></p>
-          <p><strong><%= "Data: "%></strong> <%= "#{contract.date}" %></p>
+          <p class="pt-2"><strong><%= "Service: "%></strong> <%= "#{contract.service.name_service}" %></p>
+          <p><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></p>
+          <p><strong><%= "Service provider: " %></strong> <%= "#{contract.service.user.first_name} #{contract.service.user.last_name}" %></p>
 
-          <%= link_to "See more details", service_contract_path(contract.service.id) %>
+          <% if contract.status == 'Pending' %>
+            <p class="d-inline-flex"><strong><%= "Status: "%></strong><p class="d-inline-flex p-2 ms-2 border border-warning text-warning"><%= "#{contract.status}" %></p></p>
+          <% elsif contract.status == 'Accepted' %>
+            <p class="d-inline-flex"><strong><%= "Status: "%></strong><p class="d-inline-flex p-2 ms-2 border border-success text-success"><%= "#{contract.status}" %></p></p>
+          <% else %>
+            <p class="d-inline-flex"><strong><%= "Status: "%></strong><p class="d-inline-flex p-2 ms-2 border border-danger text-danger"><%= "#{contract.status}" %></p></p>
+          <% end %>
+
+          <p><strong><%= "Date: " %></strong> <%= "#{contract.date}" %></p>
+
+          <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn btn-outline-secondary' %>
 
         </div>
-          <%#<p class="card-text"><%= "Serviço: #{contract.service.name_service}" %></p>
-          <%#<p class="card-text"><%= "Descrição: #{contract.service.description_service}" %></p>
-          <%#<p class="card-text"><%= "Prestador: #{contract.service.user.first_name} #{contract.service.user.last_name}" %></p>
-          <%#<p class="card-text"><%= "Status: #{contract.status}" %></p>
-          <%#<p class="card-text"><%= "Data: #{contract.date}" %></p>
 
         <% end %>
 
@@ -35,16 +38,15 @@
 
         <div class="service-info ms-4 border border-2 px-5 py-2">
           <div class="title-service">
-            <%= "Contratos como cliente" %>
+            <%= "Contracts as a customer" %>
           </div>
           <p>You have no contracts as a customer</p>
         </div>
 
       <% end %>
     <% else %>
-
+      <h3>Contracts as a customer</h3>
       <p>No contracts available</p>
-
     <% end %>
   </div>
 
@@ -56,27 +58,37 @@
 
         <div class="service-info ms-4 border border-2 px-5 py-2">
           <div class="title-service">
-            <%= "Contratos como prestador de serviços" %>
+            <%= "Contracts as a service provider" %>
           </div>
 
-          <p><%= "Serviço: " %> <%= "#{contract.service.name_service}" %></p>
-          <p><%= "Descrição: " %> <%= "#{contract.service.description_service}" %></p>
-          <p><%= "Cliente: " %> <%= " #{contract.user.first_name} #{contract.user.last_name}" %></p>
-          <p><%= "Status: " %> <%= "#{contract.status}" %></p>
-          <%= link_to "See more details", service_contract_path(id: contract.id) %>
+          <p><strong><%= "Service: " %></strong> <%= "#{contract.service.name_service}" %></p>
+          <p><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></p>
+          <p><strong><%= "Client: " %></strong> <%= " #{contract.user.first_name} #{contract.user.last_name}" %></p>
+
+          <% if contract.status == 'Pending' %>
+            <p class="d-inline-flex"><strong><%= "Status: " %></strong> <p class="d-inline-flex p-2 ms-2 border border-warning text-warning"><%= "#{contract.status}" %></p></p>
+          <% elsif contract.status == 'Accepted' %>
+            <p class="d-inline-flex"><strong><%= "Status: " %></strong> <p class="d-inline-flex p-2 ms-2 border border-success text-success"><%= "#{contract.status}" %></p></p>
+          <% else %>
+            <p class="d-inline-flex"><strong><%= "Status: " %></strong> <p class="d-inline-flex p-2 ms-2 border border-danger text-danger"><%= "#{contract.status}" %></p></p>
+          <% end %>
+
+          <p><strong><%= "Date: "%></strong> <%= "#{contract.date}" %></p>
+          <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn btn-outline-secondary' %>
         </div>
       <% end %>
     <% else %>
 
       <div class="service-info ms-4 border border-2 px-5 py-2">
         <div class="title-service">
-          <%= "Contratos como prestador de serviços" %>
+          <%= "Contracts as a service provider" %>
         </div>
 
         <p>You have no contracts as a service provider</p>
       </div>
     <% end %>
   <% else %>
+    <h3>Contracts as a service provider</h3>
     <p>No contracts available</p>
   <% end %>
 </div>

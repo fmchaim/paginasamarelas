@@ -1,6 +1,6 @@
 <div>
   <h1>Select a date</h1>
-  <%= simple_form_for [@service, @contract] do |f| %>
+  <%= simple_form_for [@user, @service, @contract] do |f| %>
     <%= f.input :date, as: :date, start_year: Date.today.year, end_year: Date.today.year + 1 %>
     <%= f.button :submit %>
   <% end %>

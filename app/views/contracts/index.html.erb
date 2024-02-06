@@ -4,7 +4,7 @@
 
     <% @contracts.each do |contract| %>
       <div class="card">
-        <h3>Contratos como cliente</h3>
+        <h3>Contracts as a customer</h3>
 
         <% if current_user.id == contract.user.id %>
           <p><%= contract.service.name_service %></p>
@@ -17,7 +17,7 @@
           <p>You have no contracts</p>
         <% end %>
 
-      <h3>Contratos como prestador de serviços</h3>
+      <h3>Contracts as a service provider</h3>
 
       <% if current_user.id == contract.service.user.id %>
         <p><%= contract.service.name_service %></p>

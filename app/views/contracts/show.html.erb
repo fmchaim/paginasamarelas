@@ -1,45 +1,49 @@
 <div class="container mt-4">
 
-  <h1>Parabéns! Seu contrato foi criado com sucesso! Caso queira rever as informações do seu contrato visite o seu dashboard.</h1>
-
-  <% if @contract %>
-    <h2>Detalhes do Contrato</h2>
-
-    <p><strong>Cliente:</strong> <%= @contract.user.first_name %> <%= @contract.user.last_name %></p>
-    <p><strong>Serviço Contratado:</strong> <%= @contract.service.name_service %></p>
-    <p><strong>Prestador do Serviço:</strong> <%= @contract.service.user.first_name %> <%= @contract.service.user.last_name %></p>
-    <p><strong>Data do Serviço:</strong> <%= @contract.date %></p>
-    <p><strong>Preço do Serviço:</strong> <%= @contract.service.price %></p>
-    <p><strong>Status do Serviço:</strong> <%= @contract.status %></p>
-    <%# <p><strong>Concluído:</strong> <%= @contract.done ? 'Sim' : 'Não' %></p>
-
-    <p><strong>Has the contract been completed?</strong><%= button_to 'Yes', done_path(id: @contract.id, done: true), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow" %>
-
-    <%#<%= link_to 'Reject', update_status_path(id: @contract.id, status: 'reject'), method: :patch, data: { "turbo-method": :patch } %><%#</p>
-
-
-    <%#<%= simple_form_for [@service, @contract] do |f| %>
-      <%#<%= f.label :done, "Has the contract been completed?" %>
-      <%#<%= f.button :submit, "Done", class: "btn-yellow" %>
-    <%#<% end %>
-
-  <% else %>
-    <p>Contrato não encontrado.</p>
+  <% if @new_contract_created %>
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Congratulations!</h4>
+        <p>Your contract has been created successfully! If you want to review the information of your contract visit your dashboard.</p>
+    </div>
   <% end %>
 
+  <% if @contract && @user %>
 
-  <%# <% elsif current_user == contract.service_id.user_id %>
+    <h2>Contract Details</h2>
 
-    <%# <% if @contract.status == "Pending" %>
+    <p><strong>Client:</strong> <%= @contract.user.first_name %> <%= @contract.user.last_name %></p>
+    <p><strong>Contracted Service:</strong> <%= @contract.service.name_service %></p>
+    <p><strong>Service Provider:</strong> <%= @contract.service.user.first_name %> <%= @contract.service.user.last_name %></p>
+    <p><strong>Date of Service:</strong> <%= @contract.date %></p>
+    <p><strong>Service Price:</strong> <%= @contract.service.price %></p>
 
-      <%# <p><strong>Status:</strong><%= button_to 'Accept', update_status_path(id: @contract.id, status: 'accept'), method: :patch, data: { "turbo-method": :patch } %><%#<%= link_to 'Reject', update_status_path(id: @contract.id, status: 'reject'), method: :patch, data: { "turbo-method": :patch } %><%#</p>
+    <% if @contract.status == "Pending" %>
+      <p class="d-inline-flex"><strong>Service Status:</strong> <p class="d-inline-flex p-2 ms-2 border border-warning text-warning"><%= @contract.status %></p></p>
+    <% elsif @contract.status == "Accepted" %>
+      <p class="d-inline-flex"><strong>Service Status:</strong> <p class="d-inline-flex p-2 ms-2 border border-success text-success"><%= @contract.status %></p></p>
+    <% else %>
+      <p class="d-inline-flex"><strong>Service Status:</strong> <p class="d-inline-flex p-2 ms-2 border border-danger text-danger"><%= @contract.status %></p></p>
+    <% end %>
 
-      <%# <p><strong>Concluído:</strong> <%= @contract.done ? 'Sim' : 'Não' %><%#</p>
+    <% if @contract.user == current_user && @contract.status != 'Pending' %> <!-- Verifica se o usuário é o cliente -->
+      <div class="d-flex align-items-center">
+        <p><strong>Has the contract been completed?</strong></p> <%= button_to 'Yes', done_path(id: @contract.id, done: true), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow mx-3" %>
+      </div>
+    <% end %>
 
-  <%# <%= link_to 'Voltar para Contratos', contracts_path %>
+    <% if @contract.status == 'Pending' && @contract.service.user == current_user %> <!-- Verifica se o contrato ainda esta pendete e se o usuário é o prestador de serviços -->
+      <div class="d-flex align-items-center">
+        <p><strong>Do you accept the contract?</strong></p>
+          <%= button_to 'Yes', update_status_path(id: @contract.id, status: 'Accepted'), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow mx-2" %>
+          <%= button_to 'No', update_status_path(id: @contract.id, status: 'Rejected'), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow mx-2" %>
+      </div>
+    <% end %>
+
+    <%= link_to "Leave a Review", new_user_service_contract_review_path(user_id: @contract.user.id, service_id: @contract.service.id, contract_id: @contract.id), class: "btn-yellow mt-4" %>
+
+    <%= link_to 'Back to dashboard', dashboard_path(id: @contract.id), class: "btn-yellow mt-4" %>
+
+  <% else %>
+    <p>Contract not found.</p>
+  <% end %>
 </div>
-
-
-
-<%# <%= link_to 'Accept', accept_contract_path(@contract), method: :post, data: { confirm: 'Are you sure you want to accept this contract?' } %>
-<%# <%= link_to 'Rejeitar Contrato', reject_contract_path(@contract), method: :post, data: { confirm: 'Are you sure you want to reject this contract?' } %>
