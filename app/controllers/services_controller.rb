@@ -11,15 +11,20 @@ class ServicesController < ApplicationController
         @services = Service.where('category LIKE ?', "%#{params[:search]}%")
       else
         @services = Service.all
+      end
+    end
+    @markers = @flats.geocoded.map do |flat|
+      {
+        lat: flat.latitude,
+        lng: flat.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: { service: service })
+      }
     end
   end
-  end
-
 
   def servdashboard
     @services = Service.all
   end
-
 
   def show
   end
@@ -62,6 +67,4 @@ class ServicesController < ApplicationController
     params.require(:service).permit(:name_service, :description_service,
                                     :photo, :category, :price, :address, :user_id)
   end
-
-
 end

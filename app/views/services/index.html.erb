@@ -27,7 +27,11 @@
                 <%= button_to "Message", conversations_path(sender_id: current_user.id, recipient_id: user.id), data: { "turbo-method": :post }, class:"btn-yellow-outline ms-2" %>
                 </div>
               </div>
-
+              <div class ="geo" style="width: 100%; height: 600px;"
+                data-controller="map"
+                data-map-markers-value="<%= @markers.to_json %>"
+                data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+              </div>
             </div>
         </div>
       <% end %>
