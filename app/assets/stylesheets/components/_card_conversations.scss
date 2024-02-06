@@ -1,0 +1,27 @@
+.conversation-box {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #ffffff;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &:hover {
+        background-color: #ececec;
+    }
+}
+
+.conversation-card {
+    width: 800px;
+}
+
+.username {
+    font-family: $headers-font;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    img {
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+}

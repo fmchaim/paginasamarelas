@@ -11,8 +11,8 @@ class ServicesController < ApplicationController
         @services = Service.where('category ILIKE ?', "%#{params[:search]}%")
       else
         @services = Service.all
+      end
     end
-  end
   end
 
 
@@ -29,6 +29,7 @@ class ServicesController < ApplicationController
   end
 
   def edit
+    @service = current_user.services.find(params[:service_id])
   end
 
   def create

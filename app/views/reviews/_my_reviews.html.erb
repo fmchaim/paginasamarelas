@@ -1,0 +1,22 @@
+<h1>Olá!</h1>
+
+
+<%# <p><strong>Reviews</strong></p>
+<% if @reviews.present? && @reviews.any? %>
+  <%# Encontre todos os contratos para os quais o usuário prestador de serviços está associado %>
+  <%# <% @service_provider_contracts = Contract.joins(:service).where(services: { user_id: current_user.id }) %>
+
+  <%# Extrair apenas os IDs dos contratos %>
+  <%# <% contract_ids = @service_provider_contracts.pluck(:id) %>
+
+  <%# Use os IDs dos contratos para buscar os reviews associados %>
+  <%# <% @reviews = Review.where(contract_id: contract_ids) %>
+
+  <%# Exibir os reviews encontrados %>
+  <%# <% @reviews.each do |review| %>
+    <%# <p>Rating: <%= review.rating %><%#</p>
+    <%#<p>Comment: <%= review.comment %><%#</p>
+  <%#<% end %>
+<%#<% else %>
+  <%#<p>No reviews found</p>
+<% end %>

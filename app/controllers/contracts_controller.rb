@@ -1,17 +1,24 @@
 class ContractsController < ApplicationController
-  before_action :set_service, only: [:new, :create]
-  before_action :set_contract, only: [:show, :edit, :update, :done]
+  before_action :set_service, only: [:index, :new, :create,:show]
+  before_action :set_contract, only: [:show, :edit, :update, :done, :update_status, :done]
   before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    @contracts = Contract.where('user_id = ? OR service_id = ?', current_user.id, @contract.service_id.user_id)
+    @contracts = Contract.where('user_id = ? AND service_id IN (?)', current_user.id, current_user.services.pluck(:id))
   end
 
   def show
-    @contract = Contract.where('service_id = ? OR user_id = ?', @contract.service_id, current_user.id)
+    user_id = current_user.id
+    @user = current_user
+    @customer_contracts = Contract.where(user_id: user_id)
+    @provider_contracts = Contract.where(service_id: current_user.services.pluck(:id))
+
+    # Combine os contratos do cliente e do prestador de serviços em uma única coleção
+    @contracts = @customer_contracts.or(@provider_contracts)
   end
 
   def new
+    @user = User.find(params[:user_id])
     @contract = Contract.new
   end
 
@@ -19,11 +26,24 @@ class ContractsController < ApplicationController
     @contract = Contract.new(contract_params)
     @contract.user = current_user # Atribuindo o usuário logado ao contrato
     @contract.service = @service # Atribuindo o serviço ao contrato
+    @contract.status = 'Pending' # Definindo o status de aceitação do contrato pelo usuário prestador do serviço
+    @contract.done = false # Definindo o status de conclusão do contrato
+    @new_contract_created = true
 
     if @contract.save
-      redirect_to dashboard_path(@contract), notice: 'contract created successfully!'
+      redirect_to user_service_contract_path(user_id: @contract.user.id, service_id: @contract.service.id, id: @contract.id), notice: 'contract created successfully!'
     else
       render :new, status: :unprocessable_entity, notice: 'Unable to create contract.'
+    end
+  end
+
+  def update_status
+    @contract.status = params[:status]
+
+    if @contract.save
+      redirect_to dashboard_path(@contract)
+    else
+      redirect_to user_service_contract_path(contract.service.id)
     end
   end
 
@@ -31,12 +51,11 @@ class ContractsController < ApplicationController
     render :show
   end
 
-  # Ação personalizada para aceitar ou rejeitar o contrato
   def update
     @contract = Contract.find(params[:id])
-    new_status = params[:status] # 'accept' ou 'decline'
+    new_status = params[:status] # 'accept' ou 'reject'
 
-    if current_user.id == @contract.service_id.user_id # Verifica se o usuário logado é o prestador do serviço
+    if current_user.id == @contract.service.user_id # Verifica se o usuário logado é o prestador do serviço
       if @contract.update(status: new_status)
         redirect_to dashboard_path(@contract), notice: 'Contract updated successfully.'
       else
@@ -49,11 +68,11 @@ class ContractsController < ApplicationController
 
   # Ação personalizada para marcar o contrato como concluído
   def done
-    if current_user.id == @contract.service_id.user_id # Verifica se o usuário logado é o prestador do serviço
-      @contract.update(done: true)
-      redirect_to dashboard_path(@contract), notice: 'Contract completed successfully.'
+    @contract.done = params[:done]
+    if @contract.save
+      redirect_to dashboard_path(@contract)
     else
-      redirect_to dashboard_path(@contract), notice: 'You are not allowed to mark this contract as complete.'
+      redirect_to user_service_contract_path(contract.service.id)
     end
   end
 
@@ -64,13 +83,10 @@ class ContractsController < ApplicationController
   end
 
   def set_service
-    @service = Service.find(params[:id])
+    @service = Service.find(params[:service_id])
   end
 
   def set_contract
     @contract = Contract.find(params[:id])
   end
 end
-
-# <%= link_to 'Accept', update_status_contract_path(@contract, status: 'accept'), method: :patch %> <--- PARA A VIEW
-# <%= link_to 'Decline', update_status_contract_path(@contract, status: 'decline'), method: :patch %> <--- PARA A VIEW
