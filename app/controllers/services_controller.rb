@@ -12,14 +12,20 @@ class ServicesController < ApplicationController
       else
         @services = Service.all
       end
+
+    end
+    @markers = @services.geocoded.map do |service|
+      {
+        lat: service.latitude,
+        lng: service.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: { service: service })
+      }
     end
   end
-
 
   def servdashboard
     @services = Service.all
   end
-
 
   def show
   end
@@ -63,6 +69,4 @@ class ServicesController < ApplicationController
     params.require(:service).permit(:name_service, :description_service,
                                     :photo, :category, :price, :address, :user_id)
   end
-
-
 end
