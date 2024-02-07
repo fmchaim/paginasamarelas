@@ -4,8 +4,9 @@
     <div class="col-12 col-md-6 offset-lg-3 mb-5">
       <div class="bg-white rounded p-3 shadow">
         <%= simple_form_for @service do |f| %>
-          <%= f.input :name_service, label: 'Title', placeholder: 'Electrician' %>
-          <%= f.input :description_service, label: 'Description', placeholder: 'I fix and install lights' %>
+          <%= f.input :name_service, label: 'Title', placeholder: 'Your service title' %>
+          <%= f.input :description_service, :as => :text, :input_html => { class: 'test', :cols => 5, :rows => 8 }, label: 'Description', placeholder: 'Describe your service', class:"textarea" %>
+
           <%= f.input :category, collection: @categorys%>
           <%= f.input :photo, as: :file %>
           <%= f.input :address,

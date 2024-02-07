@@ -13,7 +13,7 @@
       <% end %>
     </div>
 
-    <div class="content d-flex justify-content-around">
+    <div class="content mx-0 d-flex justify-content-around">
 
       <div class="col-md-8 px-0">
         <% @services.each do |service| %>
@@ -24,6 +24,8 @@
               <div class="service-ph my-auto">
                 <% if service.photo.attached? %>
                   <%= cl_image_tag service.photo.key, height: 200, width: 200, crop: :fill %>
+                <% else %>
+                  <%= image_tag "yellow_pages_bw_logo", class: "img-bw" %>
                 <% end %>
               </div>
 
@@ -34,7 +36,7 @@
                 </div>
 
                 <p class="pt-2"><%= service.description_service %></p>
-                <p class="mb-0">$ <%= service.price %></p>
+                <h5 class="mb-0">$ <%= service.price %></h5>
                 <p><%= service.address %></p>
 
                 <div class="service-btn">
