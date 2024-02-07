@@ -21,6 +21,7 @@
                 <p class="pt-2"><%= service.description_service %></p>
                 <p>$ <%= service.price %></p>
                 <p><%= service.address %></p>
+                <p><%= user.first_name %></p>
 
                 <div class="service-btn d-flex">
                 <%= link_to "Edit Service", edit_service_path(service.id), class: "btn-yellow" %>

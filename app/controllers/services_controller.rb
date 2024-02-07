@@ -35,7 +35,7 @@ class ServicesController < ApplicationController
   end
 
   def edit
-    @service = current_user.services.find(params[:service_id])
+    @service = current_user.services.find(params[:id])
   end
 
   def create

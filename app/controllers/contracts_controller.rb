@@ -1,7 +1,8 @@
 class ContractsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_service, only: [:index, :new, :create,:show]
   before_action :set_contract, only: [:show, :edit, :update, :done, :update_status, :done]
-  before_action :authenticate_user!, only: [:new, :create]
+
 
   def index
     @contracts = Contract.where('user_id = ? AND service_id IN (?)', current_user.id, current_user.services.pluck(:id))
