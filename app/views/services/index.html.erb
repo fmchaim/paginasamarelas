@@ -21,18 +21,17 @@
                 <p class="pt-2"><%= service.description_service %></p>
                 <p>$ <%= service.price %></p>
                 <p><%= service.address %></p>
-                <p><%= user.first_name %></p>
 
                 <div class="service-btn d-flex">
-
-                <% if user_signed_in? %>
-                  <%= link_to "Hire",  new_user_service_contract_path(user_id: current_user, service_id: service), class: "btn-yellow" %> <%# redireciona o usuário para a new de contrato %>
-                  <%= link_to "Message", conversations_path(sender_id: current_user, recipient_id: user), data: { "turbo-method": :post }, class:"btn-yellow-outline ms-2" %>
-                <% else %>
-                  <%= link_to "Hire", new_user_session_path, class: "btn-yellow" %>
-                  <%= link_to "Message", new_user_session_path, class: "btn-yellow-outline ms-2" %>
-                <% end %>
+                  <% if user_signed_in? %>
+                    <%= link_to "Hire",  new_user_service_contract_path(user_id: current_user, service_id: service), class: "btn-yellow" %> <%# redireciona o usuário para a new de contrato %>
+                    <%= link_to "Message", conversations_path(sender_id: current_user, recipient_id: user), data: { "turbo-method": :post }, class:"btn-yellow-outline ms-2" %>
+                  <% else %>
+                    <%= link_to "Hire", new_user_session_path, class: "btn-yellow" %>
+                    <%= link_to "Message", new_user_session_path, class: "btn-yellow-outline ms-2" %>
+                  <% end %>
                 </div>
+
               </div>
               <div class ="geo" style="width: 100%; height: 600px;"
                 data-controller="map"

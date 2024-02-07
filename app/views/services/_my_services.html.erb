@@ -6,9 +6,9 @@
           <% user = User.find(service.user_id)%>
             <div class="service-body d-flex">
 
-              <div class="service-ph">
+              <div class="service-ph my-auto">
                 <% if service.photo.attached? %>
-                  <%# <%= cl_image_tag service.photo.key, height: 200, width: 200, crop: :fill %> <%#%>
+                  <%= cl_image_tag service.photo.key, height: 200, width: 200, crop: :fill %>
                 <% end %>
               </div>
 
@@ -18,10 +18,9 @@
                   <%= service.name_service %>
                 </div>
 
-                <p class="pt-2"><%= service.description_service %></p>
-                <p>$ <%= service.price %></p>
+                <p class="pt-1"><%= service.description_service %></p>
+                <p class="mb-0">$ <%= service.price %></p>
                 <p><%= service.address %></p>
-                <p><%= user.first_name %></p>
 
                 <div class="service-btn d-flex">
                 <%= link_to "Edit Service", edit_service_path(service.id), class: "btn-yellow" %>

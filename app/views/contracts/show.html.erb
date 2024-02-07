@@ -1,49 +1,55 @@
-<div class="container mt-4">
+            <div class="item">
 
-  <% if @new_contract_created %>
-    <div class="alert alert-success" role="alert">
-      <h4 class="alert-heading">Congratulations!</h4>
-        <p>Your contract has been created successfully! If you want to review the information of your contract visit your dashboard.</p>
-    </div>
-  <% end %>
+              <h2 class="text-center mt-4 mb-4">Contract Details</h2>
+              <div class="container mt-4 mb-5 contract-box">
 
-  <% if @contract && @user %>
+                <% if @new_contract_created %>
+                  <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Congratulations!</h4>
+                      <p>Your contract has been created successfully! If you want to review the information of your contract visit your dashboard.</p>
+                  </div>
+                <% end %>
 
-    <h2>Contract Details</h2>
+                <% if @contract && @user %>
 
-    <p><strong>Client:</strong> <%= @contract.user.first_name %> <%= @contract.user.last_name %></p>
-    <p><strong>Contracted Service:</strong> <%= @contract.service.name_service %></p>
-    <p><strong>Service Provider:</strong> <%= @contract.service.user.first_name %> <%= @contract.service.user.last_name %></p>
-    <p><strong>Date of Service:</strong> <%= @contract.date %></p>
-    <p><strong>Service Price:</strong> <%= @contract.service.price %></p>
+                  <div class="contract-info">
 
-    <% if @contract.status == "Pending" %>
-      <p class="d-inline-flex"><strong>Service Status:</strong> <p class="d-inline-flex p-2 ms-2 border border-warning text-warning"><%= @contract.status %></p></p>
-    <% elsif @contract.status == "Accepted" %>
-      <p class="d-inline-flex"><strong>Service Status:</strong> <p class="d-inline-flex p-2 ms-2 border border-success text-success"><%= @contract.status %></p></p>
-    <% else %>
-      <p class="d-inline-flex"><strong>Service Status:</strong> <p class="d-inline-flex p-2 ms-2 border border-danger text-danger"><%= @contract.status %></p></p>
-    <% end %>
+                    <h5 class="mb-3"><strong>Client:</strong> <%= @contract.user.first_name %> <%= @contract.user.last_name %></h5>
+                    <h5 class="border-top mb-3 pt-3"><strong>Contracted Service:</strong> <%= @contract.service.name_service %></h5>
+                    <h5 class="border-top mb-3 pt-3"><strong>Service Provider:</strong> <%= @contract.service.user.first_name %> <%= @contract.service.user.last_name %></h5>
+                    <h5 class="border-top mb-3 pt-3"><strong>Date of Service:</strong> <%= @contract.date %></h5>
+                    <h5 class="border-top mb-3 pt-3"><strong>Service Price:</strong> $ <%= @contract.service.price %></h5>
 
-    <% if @contract.user == current_user && @contract.status != 'Pending' %> <!-- Verifica se o usuário é o cliente -->
-      <div class="d-flex align-items-center">
-        <p><strong>Has the contract been completed?</strong></p> <%= button_to 'Yes', done_path(id: @contract.id, done: true), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow mx-3" %>
-      </div>
-    <% end %>
+                    <div class="border-top mb-3 pt-3">
+                    <% if @contract.status == "Pending" %>
+                      <h5 class="d-inline-flex"><strong>Service Status:</strong> <h5 class="d-inline-flex p-2 ms-2 border border-warning text-warning"><%= @contract.status %></h5></h5>
+                    <% elsif @contract.status == "Accepted" %>
+                      <h5 class="d-inline-flex"><strong>Service Status:</strong> <h5 class="d-inline-flex p-2 ms-2 border border-success text-success"><%= @contract.status %></h5></h5>
+                    <% else %>
+                      <h5 class="d-inline-flex "><strong>Service Status:</strong> <h5 class="d-inline-flex p-2 ms-2 border border-danger text-danger"><%= @contract.status %></h5></h5>
+                    <% end %>
 
-    <% if @contract.status == 'Pending' && @contract.service.user == current_user %> <!-- Verifica se o contrato ainda esta pendete e se o usuário é o prestador de serviços -->
-      <div class="d-flex align-items-center">
-        <p><strong>Do you accept the contract?</strong></p>
-          <%= button_to 'Yes', update_status_path(id: @contract.id, status: 'Accepted'), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow mx-2" %>
-          <%= button_to 'No', update_status_path(id: @contract.id, status: 'Rejected'), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow mx-2" %>
-      </div>
-    <% end %>
+                    <% if @contract.user == current_user && @contract.status != 'Pending' %> <!-- Verifica se o usuário é o cliente -->
+                      <div class="d-flex align-items-center">
+                        <h5><strong>Has the contract been completed?</strong></p> <%= button_to 'Yes', done_path(id: @contract.id, done: true), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow mx-3" %>
+                      </div>
+                    <% end %>
 
-    <%= link_to "Leave a Review", new_user_service_contract_review_path(user_id: @contract.user.id, service_id: @contract.service.id, contract_id: @contract.id), class: "btn-yellow mt-4" %>
+                    <% if @contract.status == 'Pending' && @contract.service.user == current_user %> <!-- Verifica se o contrato ainda esta pendete e se o usuário é o prestador de serviços -->
+                      <div class="d-flex align-items-center">
+                        <p><strong>Do you accept the contract?</strong></p>
+                          <%= button_to 'Yes', update_status_path(id: @contract.id, status: 'Accepted'), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow mx-2" %>
+                          <%= button_to 'No', update_status_path(id: @contract.id, status: 'Rejected'), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow mx-2" %>
+                      </div>
+                    <% end %>
+                  </div>
+                  </div>
 
-    <%= link_to 'Back to dashboard', dashboard_path(id: @contract.id), class: "btn-yellow mt-4" %>
-
-  <% else %>
-    <p>Contract not found.</p>
-  <% end %>
-</div>
+                  <div class="d-flex text-center justify-content-center">
+                    <%= link_to "Leave a Review", new_user_service_contract_review_path(user_id: @contract.user.id, service_id: @contract.service.id, contract_id: @contract.id), class: "btn-yellow mt-4" %>
+                    <%= link_to 'Back to dashboard', dashboard_path(id: @contract.id), class: "btn-yellow-outline mt-4 ms-2" %>
+                  </div>
+                <% else %>
+                  <p>Contract not found.</p>
+                <% end %>
+              </div>

@@ -1,94 +1,105 @@
-<div class="card">
+<div class="container">
 
   <div class="card-body">
     <% @contracts = Contract.where('user_id = ? OR service_id IN (?)', current_user.id, current_user.services.pluck(:id)) %>
 
+    <div class="title-contract ms-3">
+      <%= "Contracts as a customer" %>
+    </div>
+
+    <div class="customer d-flex flex-wrap">
     <% if @contracts.present? && @contracts.any? %>
       <% customer_contracts = @contracts.select { |contract| current_user.id == contract.user.id } %>
 
       <% if customer_contracts.present? %>
         <% customer_contracts.each do |contract| %>
+        <div class="col">
+        <div class="card-contracts p-4 mx-auto">
 
-        <div class="service-info ms-4 border border-2 px-5 py-2">
-          <div class="title-service">
-            <%= "Contracts as a customer" %>
-          </div>
-
-          <p class="pt-2"><strong><%= "Service: "%></strong> <%= "#{contract.service.name_service}" %></p>
-          <p><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></p>
-          <p><strong><%= "Service provider: " %></strong> <%= "#{contract.service.user.first_name} #{contract.service.user.last_name}" %></p>
+          <h5 class="pt-2 border-bottom mb-3"><strong><%= "Service: "%></strong> <%= "#{contract.service.name_service}" %></h5>
+          <h6><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></h6>
+          <h6><strong><%= "Service provider: " %></strong> <%= "#{contract.service.user.first_name} #{contract.service.user.last_name}" %></h6>
 
           <% if contract.status == 'Pending' %>
-            <p class="d-inline-flex"><strong><%= "Status: "%></strong><p class="d-inline-flex p-2 ms-2 border border-warning text-warning"><%= "#{contract.status}" %></p></p>
-          <% elsif contract.status == 'Accepted' %>
-            <p class="d-inline-flex"><strong><%= "Status: "%></strong><p class="d-inline-flex p-2 ms-2 border border-success text-success"><%= "#{contract.status}" %></p></p>
+              <h6 class="d-inline-flex"><strong><%= "Status: "%></strong><h6 class="d-inline-flex p-1 ms-1 border border-warning text-warning"><%= "#{contract.status}" %></h6></h6>
+            <% elsif contract.status == 'Accepted' %>
+              <h6 class="d-inline-flex"><strong><%= "Status: "%></strong><h6 class="d-inline-flex p-1 ms-1 border border-success text-success"><%= "#{contract.status}" %></h6></h6>
           <% else %>
-            <p class="d-inline-flex"><strong><%= "Status: "%></strong><p class="d-inline-flex p-2 ms-2 border border-danger text-danger"><%= "#{contract.status}" %></p></p>
+              <h6 class="d-inline-flex"><strong><%= "Status: "%></strong><h6 class="d-inline-flex p-1 ms-1 border border-danger text-danger"><%= "#{contract.status}" %></h6></h6>
           <% end %>
 
-          <p><strong><%= "Date: " %></strong> <%= "#{contract.date}" %></p>
+            <h6><strong><%= "Date: " %></strong> <%= "#{contract.date}" %></h6>
 
-          <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn btn-outline-secondary' %>
-
+            <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn-yellow mt-2 w-100' %>
         </div>
-
-        <% end %>
+        </div>
+      <% end %>
 
       <% else %>
-
-        <div class="service-info ms-4 border border-2 px-5 py-2">
-          <div class="title-service">
+        <div class="card-contracts p-4">
+          <div class="title-contract">
             <%= "Contracts as a customer" %>
           </div>
-          <p>You have no contracts as a customer</p>
+          <div class="card-contracts p-4 w-100">
+            <p class="d-flex">You have 0 contracts as a customer</p>
+          </div>
         </div>
 
       <% end %>
     <% else %>
-      <h3>Contracts as a customer</h3>
+    <div class="card-contracts p-4 w-100">
       <p>No contracts available</p>
+    </div>
     <% end %>
   </div>
+</div>
 
-  <% if @contracts.present? && @contracts.any? %>
-    <% provider_contracts = @contracts.select { |contract| current_user.id == contract.service.user.id } %>
 
-    <% if provider_contracts.present? %>
-      <% provider_contracts.each do |contract| %>
 
-        <div class="service-info ms-4 border border-2 px-5 py-2">
-          <div class="title-service">
-            <%= "Contracts as a service provider" %>
+<div class="container">
+
+  <div class="title-contract">
+    <%= "Contracts as a service provider" %>
+  </div>
+
+  <div class="provider d-flex flex-row">
+    <% if @contracts.present? && @contracts.any? %>
+      <% provider_contracts = @contracts.select { |contract| current_user.id == contract.service.user.id } %>
+
+      <% if provider_contracts.present? %>
+        <% provider_contracts.each do |contract| %>
+
+          <div class="col">
+          <div class="card-contracts p-4 mx-auto">
+
+            <p><strong><%= "Service: " %></strong> <%= "#{contract.service.name_service}" %></p>
+            <p><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></p>
+            <p><strong><%= "Client: " %></strong> <%= " #{contract.user.first_name} #{contract.user.last_name}" %></p>
+
+            <% if contract.status == 'Pending' %>
+              <p class="d-inline-flex"><strong><%= "Status: " %></strong> <p class="d-inline-flex p-1 ms-1 border border-warning text-warning"><%= "#{contract.status}" %></p></p>
+            <% elsif contract.status == 'Accepted' %>
+              <p class="d-inline-flex"><strong><%= "Status: " %></strong> <p class="d-inline-flex p-1 ms-1 border border-success text-success"><%= "#{contract.status}" %></p></p>
+            <% else %>
+              <p class="d-inline-flex"><strong><%= "Status: " %></strong> <p class="d-inline-flex p-1 ms-1 border border-danger text-danger"><%= "#{contract.status}" %></p></p>
+            <% end %>
+
+            <p><strong><%= "Date: "%></strong> <%= "#{contract.date}" %></p>
+            <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn-yellow mt-2 w-100' %>
           </div>
+          </div>
+        <% end %>
+      <% else %>
 
-          <p><strong><%= "Service: " %></strong> <%= "#{contract.service.name_service}" %></p>
-          <p><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></p>
-          <p><strong><%= "Client: " %></strong> <%= " #{contract.user.first_name} #{contract.user.last_name}" %></p>
-
-          <% if contract.status == 'Pending' %>
-            <p class="d-inline-flex"><strong><%= "Status: " %></strong> <p class="d-inline-flex p-2 ms-2 border border-warning text-warning"><%= "#{contract.status}" %></p></p>
-          <% elsif contract.status == 'Accepted' %>
-            <p class="d-inline-flex"><strong><%= "Status: " %></strong> <p class="d-inline-flex p-2 ms-2 border border-success text-success"><%= "#{contract.status}" %></p></p>
-          <% else %>
-            <p class="d-inline-flex"><strong><%= "Status: " %></strong> <p class="d-inline-flex p-2 ms-2 border border-danger text-danger"><%= "#{contract.status}" %></p></p>
-          <% end %>
-
-          <p><strong><%= "Date: "%></strong> <%= "#{contract.date}" %></p>
-          <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn btn-outline-secondary' %>
-        </div>
-      <% end %>
-    <% else %>
-
-      <div class="service-info ms-4 border border-2 px-5 py-2">
-        <div class="title-service">
-          <%= "Contracts as a service provider" %>
-        </div>
-
-        <p>You have no contracts as a service provider</p>
+      <div class="card-contracts p-4 w-100">
+        <p class="mb-0">You have 0 contracts as a service provider</p>
       </div>
     <% end %>
-  <% else %>
-    <h3>Contracts as a service provider</h3>
-    <p>No contracts available</p>
-  <% end %>
+    <% else %>
+      <div class="card-contracts p-4 w-100">
+        <p>No contracts available</p>
+      </div>
+    <% end %>
+    </div>
+  </div>
 </div>
