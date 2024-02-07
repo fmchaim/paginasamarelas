@@ -1,14 +1,29 @@
 <section class="container">
   <div class="row">
-    <div class="col-md-8 w-100 px-0">
-      <% @services.each do |service| %>
-        <div class="card-my-services my-4">
-          <% user = User.find(service.user_id)%>
+
+    <div class="title mt-4">
+      <% if params[:search].blank? && params[:city].blank? %>
+        <h2>All services (<%= @services.count %> results)</h2>
+      <% elsif params[:search].present? && params[:city].blank? %>
+        <h2><%= params[:search].capitalize %> (<%= @services.count %> results)</h2>
+      <% elsif params[:city].present? && params[:search].blank? %>
+        <h2>Services in <%= params[:city].capitalize %> (<%= @services.count %> results)</h2>
+      <% else %>
+        <h2><%= params[:search].capitalize %> in <%= params[:city].capitalize %> (<%= @services.count %> results)</h2>
+      <% end %>
+    </div>
+
+    <div class="content d-flex justify-content-around">
+
+      <div class="col-md-8 px-0">
+        <% @services.each do |service| %>
+          <div class="card-services my-4">
+            <% user = User.find(service.user_id)%>
             <div class="service-body d-flex">
 
-              <div class="service-ph">
+              <div class="service-ph my-auto">
                 <% if service.photo.attached? %>
-                 <%= cl_image_tag service.photo.key, height: 200, width: 200, crop: :fill %>
+                  <%= cl_image_tag service.photo.key, height: 200, width: 200, crop: :fill %>
                 <% end %>
               </div>
 
@@ -19,28 +34,53 @@
                 </div>
 
                 <p class="pt-2"><%= service.description_service %></p>
-                <p>$ <%= service.price %></p>
+                <p class="mb-0">$ <%= service.price %></p>
                 <p><%= service.address %></p>
 
-                <div class="service-btn d-flex">
+                <div class="service-btn">
                   <% if user_signed_in? %>
                     <%= link_to "Hire",  new_user_service_contract_path(user_id: current_user, service_id: service), class: "btn-yellow" %> <%# redireciona o usuário para a new de contrato %>
-                    <%= link_to "Message", conversations_path(sender_id: current_user, recipient_id: user), data: { "turbo-method": :post }, class:"btn-yellow-outline ms-2" %>
+                    <%= link_to "Message", conversations_path(sender_id: current_user, recipient_id: user), data: { "turbo-method": :post }, class:"btn-yellow-outline ms-1" %>
+                    <%= link_to "More Info", service_path(service.id), class:"btn-yellow-outline ms-1" %>
                   <% else %>
                     <%= link_to "Hire", new_user_session_path, class: "btn-yellow" %>
-                    <%= link_to "Message", new_user_session_path, class: "btn-yellow-outline ms-2" %>
+                    <%= link_to "Message", new_user_session_path, class: "btn-yellow-outline ms-1" %>
+                    <%= link_to "More Info", service_path(service.id), class:"btn-yellow-outline ms-1" %>
                   <% end %>
                 </div>
-
-              </div>
-              <div class ="geo" style="width: 100%; height: 600px;"
-                data-controller="map"
-                data-map-markers-value="<%= @markers.to_json %>"
-                data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
               </div>
             </div>
-        </div>
-      <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="search my-4">
+
+          <div class ="geo" style="width: 100%; height: 350px;"
+                        data-controller="map"
+                        data-map-markers-value="<%= @markers.to_json %>"
+                        data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+          </div>
+
+          <div class="filter mt-3">
+            <h6><i class="fa-solid fa-filter"></i> Filter by:</h6>
+            <%= form_tag services_path, method: :get do %>
+
+              <div class="form-group">
+                <%= select_tag :search, options_for_select(Service.pluck(:category).uniq, params[:search]), include_blank: "Category", class: "form-control" %>
+              </div>
+
+              <div class="form-group">
+                <%= text_field_tag :city, params[:city], placeholder: "City", class: "form-control" %>
+              </div>
+
+              <div class="form-group">
+                <%= submit_tag "Search", class: "btn-yellow-outline mt-3 w-100" %>
+              </div>
+            <% end %>
+          </div>
+
+      </div>
     </div>
   </div>
 </section>

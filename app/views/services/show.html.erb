@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 px-0 w-100 my-4">
+      <div class="card-services my-4">
+
+        <div class="service-body">
+
+          <div class="service-ph my-auto d-flex justify-content-center">
+            <% if @service.photo.attached? %>
+              <%= cl_image_tag @service.photo.key, height: 300, width: 1100, crop: :fill %>
+            <% end %>
+          </div>
+
+          <div class="service-info ms-auto p-3">
+
+            <p class="tag-yellow mb-1"><%= @service.category %></p>
+            <div class="title-service">
+                <%= @service.name_service %>
+            </div>
+
+            <% user = User.find(@service.user_id)%>
+            <p>Provider: <%= user.first_name %> <%= user.last_name %></p>
+
+            <p class="pt-2"><%= @service.description_service %></p>
+            <p class="mb-0">$ <%= @service.price %></p>
+            <p><%= @service.address %></p>
+
+            <div class="service-btn">
+              <% if user_signed_in? %>
+                <%= link_to "Hire",  new_user_service_contract_path(user_id: current_user, service_id: @service), class: "btn-yellow" %> <%# redireciona o usuário para a new de contrato %>
+                <%= link_to "Message", conversations_path(sender_id: current_user, recipient_id: user), data: { "turbo-method": :post }, class:"btn-yellow-outline ms-1" %>
+              <% else %>
+                <%= link_to "Hire", new_user_session_path, class: "btn-yellow" %>
+                <%= link_to "Message", new_user_session_path, class: "btn-yellow-outline ms-1" %>
+              <% end %>
+            </div>
+
+            <div class="mt-4">
+              <p class="title-reviews mb-3">Reviews</p>
+
+                <div class="card-body d-flex flex-column">
+
+                  <div class="img me-3 d-flex align-items-center">
+                    <img class="image-review-show mb-1" src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                    <p class="mb-0">Jonas Wright</p>
+                  </div>
+
+                  <div class="review">
+                    </h5><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <p class="mt-2">“I had a great experience with this company. They were very professional and did a great job. I would highly recommend them.”</p>
+                  </div>
+
+                </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 require 'csv'
 class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :edit, :update, :destroy]
+  before_action :set_reviews, only: [:show]
   skip_before_action :authenticate_user!, only: :index
 
   def index
@@ -63,6 +64,10 @@ class ServicesController < ApplicationController
 
   def set_service
     @service = Service.find(params[:id])
+  end
+
+  def set_reviews
+    @review = Review.where(service_id: @service.id)
   end
 
   def service_params

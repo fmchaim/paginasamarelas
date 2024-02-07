@@ -16,7 +16,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    width: 800px;
+    width: 100%;
 }
 
 .title-service {
@@ -24,14 +24,14 @@
     border-bottom: 1px solid #ccc;
     font-size: 25px;
     font-weight: bold;
-    font-family: $headers-font;
+    font-family: $body-font;
 }
 
 .service-info {
     width: 100%;
 }
 
-.services-ph {
+.service-ph {
     object-fit: cover;
 }
 
@@ -41,4 +41,17 @@
     border-radius: 5px;
     padding: 10px;
     width: 100%;
+}
+
+.search {
+    width: 300px;
+}
+
+.filter {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    i {
+        color: $yellow;
+    }
 }
