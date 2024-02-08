@@ -3,7 +3,7 @@
   <div class="card-body">
     <% @contracts = Contract.where('user_id = ? OR service_id IN (?)', current_user.id, current_user.services.pluck(:id)) %>
 
-    <div class="title-contract ms-3">
+    <div class="title-contract text-center ms-3">
       <%= "Contracts as a customer" %>
     </div>
 
@@ -13,21 +13,21 @@
 
       <% if customer_contracts.present? %>
         <% customer_contracts.each do |contract| %>
-        <div class="card-contracts p-4 mx-auto0">
+        <div class="card-contracts p-4 mx-auto">
 
-          <h5 class="pt-2 border-bottom mb-3"><strong><%= "Service: "%></strong> <%= "#{contract.service.name_service}" %></h5>
-          <h6><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></h6>
-          <h6><strong><%= "Service provider: " %></strong> <%= "#{contract.service.user.first_name} #{contract.service.user.last_name}" %></h6>
+          <p class="pt-2 border-bottom mb-3"><strong><%= "Service: "%></strong> <%= "#{contract.service.name_service}" %></p>
+          <p><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></p>
+          <p><strong><%= "Service provider: " %></strong> <%= "#{contract.service.user.first_name} #{contract.service.user.last_name}" %></p>
 
           <% if contract.status == 'Pending' %>
-              <h6 class="d-inline-flex"><strong><%= "Status: "%></strong><h6 class="d-inline-flex p-1 ms-1 border border-warning text-warning"><%= "#{contract.status}" %></h6></h6>
+              <p class="d-inline-flex"><strong><%= "Status: "%></strong><p class="d-inline-flex p-1 ms-1 border border-warning text-warning"><%= "#{contract.status}" %></p></p>
             <% elsif contract.status == 'Accepted' %>
-              <h6 class="d-inline-flex"><strong><%= "Status: "%></strong><h6 class="d-inline-flex p-1 ms-1 border border-success text-success"><%= "#{contract.status}" %></h6></h6>
+              <p class="d-inline-flex"><strong><%= "Status: "%></strong><p class="d-inline-flex p-1 ms-1 border border-success text-success"><%= "#{contract.status}" %></p></p>
           <% else %>
-              <h6 class="d-inline-flex"><strong><%= "Status: "%></strong><h6 class="d-inline-flex p-1 ms-1 border border-danger text-danger"><%= "#{contract.status}" %></h6></h6>
+              <p class="d-inline-flex"><strong><%= "Status: "%></strong><p class="d-inline-flex p-1 ms-1 border border-danger text-danger"><%= "#{contract.status}" %></p></p>
           <% end %>
 
-            <h6><strong><%= "Date: " %></strong> <%= "#{contract.date}" %></h6>
+            <p><strong><%= "Date: " %></strong> <%= "#{contract.date}" %></p>
 
             <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn-yellow-outline mt-2 w-100' %>
         </div>
@@ -50,11 +50,11 @@
 
 
 
-  <div class="title-contract mb-2">
+  <div class="title-contract text-center border-top mt-3">
     <%= "Contracts as a service provider" %>
   </div>
 
-  <div class="provider d-flex flex-row ">
+  <div class="provider">
     <% if @contracts.present? && @contracts.any? %>
       <% provider_contracts = @contracts.select { |contract| current_user.id == contract.service.user.id } %>
 
@@ -63,9 +63,9 @@
 
           <div class="card-contracts p-4 mx-auto">
 
-            <p><strong><%= "Service: " %></strong> <%= "#{contract.service.name_service}" %></p>
-            <p><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></p>
-            <p><strong><%= "Client: " %></strong> <%= " #{contract.user.first_name} #{contract.user.last_name}" %></p>
+            <h6><strong><%= "Service: " %></strong> <%= "#{contract.service.name_service}" %></h6>
+            <h6><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></h6>
+            <h6><strong><%= "Client: " %></strong> <%= " #{contract.user.first_name} #{contract.user.last_name}" %></h6>
 
             <% if contract.status == 'Pending' %>
               <p class="d-inline-flex"><strong><%= "Status: " %></strong> <p class="d-inline-flex p-1 ms-1 border border-warning text-warning mb-0"><%= "#{contract.status}" %></p></p>
