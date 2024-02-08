@@ -19,6 +19,9 @@ class MessagesController < ApplicationController
     @message = @conversation.messages.new(body: params[:message][:body], user_id: current_user.id)
     return unless @message.save
 
+    ActionCable.server.broadcast 'message_channel', { message: @message.body, user_id: @message.user_id, created_at: @message.created_at }
+
+
     redirect_to conversation_messages_path(@conversation)
   end
 

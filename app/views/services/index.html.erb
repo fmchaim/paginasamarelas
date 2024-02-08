@@ -43,7 +43,7 @@
                 <div class="service-btn">
                   <% if user_signed_in? %>
                     <%= link_to "Hire",  new_user_service_contract_path(user_id: current_user, service_id: service), class: "btn-yellow" %> <%# redireciona o usuário para a new de contrato %>
-                    <%= link_to "Message", conversations_path(sender_id: current_user, recipient_id: user), data: { "turbo-method": :post }, class:"btn-yellow-outline ms-1" %>
+                    <%= link_to "Message", conversations_path(sender_id: current_user.id, recipient_id: user.id), data: { "turbo-method": :get }, class:"btn-yellow-outline ms-1" %>
                     <%= link_to "More Info", service_path(service.id), class:"btn-yellow-outline ms-1" %>
                   <% else %>
                     <%= link_to "Hire", new_user_session_path, class: "btn-yellow" %>
@@ -56,6 +56,7 @@
           </div>
         <% end %>
       </div>
+
 
       <div class="search my-4">
 
@@ -75,6 +76,7 @@
                     <%= radio_button_tag "search", category, params[:search] == category, id: "category_#{category.parameterize}" %>
                     <%= label_tag "category_#{category.parameterize}", category %>
                   </div>
+
                 <% end %>
               </div>
 
