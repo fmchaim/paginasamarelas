@@ -31,24 +31,31 @@
 
                     <% if @contract.user == current_user && @contract.status != 'Pending' %> <!-- Verifica se o usuário é o cliente -->
                       <div class="d-flex align-items-center">
-                        <h5><strong>Has the contract been completed?</strong></p> <%= button_to 'Yes', done_path(id: @contract.id, done: true), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow mx-3" %>
+                        <h5 class="my-auto"><strong>Has the contract been completed?</strong></h5>
+                        <%= button_to 'Yes', done_path(id: @contract.id, done: true), method: :patch, data: { "turbo-method": :patch }, class: "btn-green mx-3" %>
                       </div>
                     <% end %>
 
                     <% if @contract.status == 'Pending' && @contract.service.user == current_user %> <!-- Verifica se o contrato ainda esta pendete e se o usuário é o prestador de serviços -->
-                      <div class="d-flex align-items-center">
-                        <p><strong>Do you accept the contract?</strong></p>
-                          <%= button_to 'Yes', update_status_path(id: @contract.id, status: 'Accepted'), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow mx-2" %>
-                          <%= button_to 'No', update_status_path(id: @contract.id, status: 'Rejected'), method: :patch, data: { "turbo-method": :patch }, class: "btn-yellow mx-2" %>
+                      <div class="d-flex align-items-center mt-2">
+                        <h5 class="my-auto"><strong>Do you accept the contract?</strong></h5>
+                        <%= button_to 'Yes', update_status_path(id: @contract.id, status: 'Accepted'), method: :patch, data: { "turbo-method": :patch }, class: "btn-green mx-2" %>
+                        <%= button_to 'No', update_status_path(id: @contract.id, status: 'Rejected'), method: :patch, data: { "turbo-method": :patch }, class: "btn-red" %>
                       </div>
                     <% end %>
                   </div>
                   </div>
 
+                  <%# só aparece o botao de deixar review se o contrato tiver sido done e o user for o cliente %>
                   <div class="d-flex text-center justify-content-center">
-                    <%= link_to "Leave a Review", new_user_service_contract_review_path(user_id: @contract.user.id, service_id: @contract.service.id, contract_id: @contract.id), class: "btn-yellow mt-4" %>
-                    <%= link_to 'Back to dashboard', dashboard_path(id: @contract.id), class: "btn-yellow-outline mt-4 ms-2" %>
+                    <% if @contract.status == 'Done' && @contract.service.user != current_user %>
+                      <%= link_to "Leave a Review", new_user_service_contract_review_path(user_id: @contract.user.id, service_id: @contract.service.id, contract_id: @contract.id), class: "btn-yellow mt-4" %>
+                      <%= link_to 'Back to dashboard', dashboard_path(id: @contract.id), class: "btn-yellow mt-4 ms-2" %>
+                    <% else %>
+                      <%= link_to 'Back to dashboard', dashboard_path(id: @contract.id), class: "btn-yellow mt-4 ms-2" %>
+                    <% end %>
                   </div>
+
                 <% else %>
                   <p>Contract not found.</p>
                 <% end %>

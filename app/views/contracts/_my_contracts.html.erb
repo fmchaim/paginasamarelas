@@ -13,8 +13,7 @@
 
       <% if customer_contracts.present? %>
         <% customer_contracts.each do |contract| %>
-        <div class="col">
-        <div class="card-contracts p-4 mx-auto">
+        <div class="card-contracts p-4 mx-auto0">
 
           <h5 class="pt-2 border-bottom mb-3"><strong><%= "Service: "%></strong> <%= "#{contract.service.name_service}" %></h5>
           <h6><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></h6>
@@ -30,8 +29,7 @@
 
             <h6><strong><%= "Date: " %></strong> <%= "#{contract.date}" %></h6>
 
-            <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn-yellow mt-2 w-100' %>
-        </div>
+            <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn-yellow-outline mt-2 w-100' %>
         </div>
       <% end %>
 
@@ -51,7 +49,6 @@
 
 
 
-<div class="container">
 
   <div class="title-contract mb-2">
     <%= "Contracts as a service provider" %>
@@ -64,7 +61,6 @@
       <% if provider_contracts.present? %>
         <% provider_contracts.each do |contract| %>
 
-          <div class="col">
           <div class="card-contracts p-4 mx-auto">
 
             <p><strong><%= "Service: " %></strong> <%= "#{contract.service.name_service}" %></p>
@@ -80,8 +76,7 @@
             <% end %>
 
             <p><strong><%= "Date: "%></strong> <%= "#{contract.date}" %></p>
-            <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn-yellow mt-2 w-100' %>
-          </div>
+            <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn-yellow-outline mt-2 w-100' %>
           </div>
         <% end %>
       <% else %>
@@ -97,4 +92,3 @@
     <% end %>
     </div>
   </div>
-</div>
