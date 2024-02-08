@@ -4,15 +4,16 @@ class ConversationsController < ApplicationController
   def index
     @users = User.all
     @conversations = Conversation.all
-  end
 
-  def create
     if Conversation.find_by(sender_id: params[:sender_id], recipient_id: params[:recipient_id]).present?
       @conversation = Conversation.find_by(sender_id: params[:sender_id], recipient_id: params[:recipient_id])
+      redirect_to conversation_messages_path(@conversation)
     else
-      @conversation = Conversation.create!(conversation_params)
+     if params[:recipient_id].to_i != current_user.id
+        @conversation = Conversation.create(sender_id: params[:sender_id], recipient_id: params[:recipient_id])
+        redirect_to conversation_messages_path(@conversation)
     end
-    redirect_to conversation_messages_path(@conversation)
+  end
   end
 
   private

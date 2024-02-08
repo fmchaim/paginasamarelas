@@ -1,37 +1,26 @@
+
 <div class="container">
   <div class="row d-flex justify-center">
     <h2 class="text-center mt-4 mb-4 p-0">Mailbox</h2>
 
-            <div class="item">
+            <div class="conversations">
               <% @conversations.each do |conversation| %>
+              <div class="conversation-box mx-3 px-4">
                 <% if conversation.sender_id == current_user.id || conversation.recipient_id == current_user.id %>
                   <% if conversation.sender_id == current_user.id %>
                     <% recipient = User.find(conversation.recipient_id) %>
                   <% else %>
                     <% recipient = User.find(conversation.sender_id) %>
                   <% end %>
-                  <%= link_to recipient.first_name, conversation_messages_path(conversation)%>
+                  <p class="username mb-0">
+                   <%= recipient.first_name %> <%= recipient.last_name %>
+                  <%= cl_image_tag(recipient.photo.key, height: 50, width: 50, crop: :fill) if recipient.photo.present? %>
+                  </p>
+
+                  <%= link_to 'Message', conversation_messages_path(conversation), class:"btn-yellow-outline"%>
                 <% end %>
-              <% end %>
-            </div>
-
-            <div class="conversations">
-            <% @users.each do |user| %>
-              <% if user.id != current_user.id %>
-              <div class="conversation-box mx-3 px-4">
-
-                <p class="username mb-0">
-                <%= cl_image_tag(user.photo.key, height: 50, width: 50, crop: :fill) if user.photo.present? %>
-                <%= user.first_name %> <%= user.last_name %>
-                </p>
-
-                <%= link_to 'Message', conversations_path(sender_id: current_user.id, recipient_id: user.id), method: 'post', class:"btn-yellow-outline" %>
               </div>
               <% end %>
-            <% end %>
-          </div>
-
-      </div>
-    </div>
   </div>
+</div>
 </div>

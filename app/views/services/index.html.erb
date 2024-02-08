@@ -27,7 +27,7 @@
 
                 <% if user_signed_in? %>
                   <%= link_to "Hire",  new_user_service_contract_path(user_id: current_user, service_id: service), class: "btn-yellow" %> <%# redireciona o usuário para a new de contrato %>
-                  <%= link_to "Message", conversations_path(sender_id: current_user, recipient_id: user), data: { "turbo-method": :post }, class:"btn-yellow-outline ms-2" %>
+                  <%= link_to "Message", conversations_path(sender_id: current_user.id, recipient_id: user.id), data: { "turbo-method": :get }, class:"btn-yellow-outline ms-2" %>
                 <% else %>
                   <%= link_to "Hire", new_user_session_path, class: "btn-yellow" %>
                   <%= link_to "Message", new_user_session_path, class: "btn-yellow-outline ms-2" %>
