@@ -58,6 +58,8 @@ class ServicesController < ApplicationController
 
   def destroy
     @service.destroy
+
+    redirect_to dashboard_path(current_user), status: :see_other
   end
 
   private

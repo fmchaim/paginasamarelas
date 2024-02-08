@@ -9,6 +9,8 @@
               <div class="service-ph my-auto">
                 <% if service.photo.attached? %>
                   <%= cl_image_tag service.photo.key, height: 200, width: 200, crop: :fill %>
+                <% else %>
+                  <%= image_tag "yellow_pages_bw_logo", class: "img-bw" %>
                 <% end %>
               </div>
 
@@ -18,13 +20,14 @@
                   <%= service.name_service %>
                 </div>
 
-                <p class="pt-1 mt-2"><%= service.description_service %></p>
-                <h5 class="mb-0">$ <%= service.price %></h5>
                 <p><%= service.address %></p>
+                <p class="pt-1 mt-2 mb-3"><%= service.description_service %></p>
+                <h4 class="mt-4 mb-3"><b>$ <%= service.price %></b></h4>
 
                 <div class="service-btn d-flex">
                 <%= link_to "Edit Service", edit_service_path(service.id), class: "btn-yellow" %>
-                <%= button_to "Delete", conversations_path(sender_id: service.id), data: { "turbo-method": :post }, class:"btn-red-outline ms-2" %>
+                <%= button_to "Delete", service_path(service.id), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?"}, class:"btn-red-outline ms-2" %>
+
                 </div>
               </div>
 

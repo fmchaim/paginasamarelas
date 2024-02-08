@@ -13,12 +13,13 @@
       <% end %>
     </div>
 
-    <div class="content mx-0 d-flex justify-content-around">
+    <div class="content mx-0 d-flex justify-content-between">
 
       <div class="col-md-8 px-0">
         <% @services.each do |service| %>
           <div class="card-services my-4">
             <% user = User.find(service.user_id)%>
+
             <div class="service-body d-flex">
 
               <div class="service-ph my-auto">
@@ -35,9 +36,9 @@
                   <%= service.name_service %>
                 </div>
 
-                <p class="pt-2"><%= service.description_service %></p>
-                <h5 class="mb-0">$ <%= service.price %></h5>
                 <p><%= service.address %></p>
+                <p class="pt-2"><%= service.description_service %></p>
+                <h4 class="mt-4 mb-3"><b>$ <%= service.price %></b></h4>
 
                 <div class="service-btn">
                   <% if user_signed_in? %>
@@ -69,11 +70,12 @@
             <%= form_tag services_path, method: :get do %>
 
               <div class="form-group">
-                <%= select_tag :search, options_for_select(Service.pluck(:category).uniq, params[:search]), include_blank: "Category", class: "form-control" %>
-              </div>
-
-              <div class="form-group">
-                <%= text_field_tag :city, params[:city], placeholder: "City", class: "form-control" %>
+                <% Service.pluck(:category).uniq.each do |category| %>
+                  <div class="form-check">
+                    <%= radio_button_tag "search", category, params[:search] == category, id: "category_#{category.parameterize}" %>
+                    <%= label_tag "category_#{category.parameterize}", category %>
+                  </div>
+                <% end %>
               </div>
 
               <div class="form-group">
