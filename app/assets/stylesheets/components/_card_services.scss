@@ -24,11 +24,15 @@
     border-bottom: 1px solid #ccc;
     font-size: 25px;
     font-weight: bold;
-    font-family: $headers-font;
+    font-family: $body-font;
 }
 
 .service-info {
     width: 100%;
+}
+
+.service-ph {
+    object-fit: cover;
 }
 
 .card-my-services {
@@ -37,4 +41,27 @@
     border-radius: 5px;
     padding: 10px;
     width: 100%;
+}
+
+.search {
+    width: 300px;
+}
+
+.filter {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    i {
+        color: $yellow;
+    }
+}
+
+.img-bw {
+    width: 200px;
+    height: 200px;
+}
+
+.textarea {
+    width: auto;
+    height: auto;
 }
