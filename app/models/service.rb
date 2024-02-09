@@ -1,6 +1,7 @@
 class Service < ApplicationRecord
   belongs_to :user
   has_many :contracts
+  has_many :reviews, through: :contracts
   validates :category, presence: true
 
   has_one_attached :photo

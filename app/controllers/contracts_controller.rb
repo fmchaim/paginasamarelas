@@ -69,7 +69,7 @@ class ContractsController < ApplicationController
 
   # Ação personalizada para marcar o contrato como concluído
   def done
-    @contract.done = params[:done]
+    @contract.done = true
     if @contract.save
       redirect_to dashboard_path(@contract)
     else

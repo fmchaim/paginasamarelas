@@ -45,16 +45,19 @@
 
         <div class="card-body d-flex flex-column">
 
+        <% if @service.reviews.any? %>
         <div class="img me-3 d-flex align-items-center">
             <img class="image-review-show mb-1" src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-            <p class="mb-0">Jonas Wright</p>
+            <p class="mb-0"><%= @service.reviews.sample.contract.user.first_name %></p>
         </div>
 
         <div class="review">
           </h5><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-          <p class="mt-2">“I had a great experience with this company. They were very professional and did a great job. I would highly recommend them.”</p>
+          <p class="mt-2"><%= @service.reviews.sample.comment %></p>
         </div>
-
+        <% else %>
+          <p>No reviews yet.</p>
+        <% end %>
         </div>
       </div>
     </div>

@@ -1,30 +1,33 @@
-<% if @reviews.present? && @reviews.any? %>
+<% if current_user.reviews %>
   <%# Encontre todos os contratos para os quais o usuário prestador de serviços está associado %>
-  <% @service_provider_contracts = Contract.joins(:service).where(services: { user_id: current_user.id }) %>
+  <% #@service_provider_contracts = Contract.joins(:service).where(services: { user_id: current_user.id }) %>
 
   <%# Extrair apenas os IDs dos contratos %>
-  <% contract_ids = @service_provider_contracts.pluck(:id) %>
+  <% #contract_ids = @service_provider_contracts.pluck(:id) %>
 
   <%# Use os IDs dos contratos para buscar os reviews associados %>
-  <% @reviews = Review.where(contract_id: contract_ids) %>
+  <% #@reviews = Review.where(contract_id: contract_ids) %>
 
   <%# Exibir os reviews encontrados %>
-  <% @reviews.each do |review| %>
-    <p>Service: <%= review.contract.service.name_service %></p>
 
-    <div>
-      <p>Client: <%= review.contract.user.first_name %> <%= review.contract.user.last_name %></p>
-      <% if review.contract.user.photo.attached? %>
-        <%= image_tag review.contract.user.photo %>
-      <% end %>
+    <% current_user.reviews.each do |review| %>
+    <div class="card-my-services p-4 mx-auto">
+      <p class="pt-2 border-bottom mb-3"><strong>Service: </strong><%= review.contract.service.name_service %></p>
+
+      <div>
+        <p><strong>Client: </strong><%= review.contract.user.first_name %> <%= review.contract.user.last_name %></p>
+        <% if review.contract.user.photo.attached? %>
+          <%= image_tag review.contract.user.photo %>
+        <% end %>
+      </div>
+
+      <p><strong>Rating: </strong><%= review.rating %></p>
+      <p><strong>Comment: </strong><%= review.comment %></p>
     </div>
+    <% end %>
 
-    <p>Rating: <%= review.rating %></p>
-    <p>Comment: <%= review.comment %></p>
-  <% end %>
-
-<% else %>
-  <div class="card-contracts p-4 w-100">
-    <p class="d-flex mb-0">You have 0 reviews</p>
-  </div>
-<% end %>
+    <% else %>
+      <div class="card-contracts p-4 w-100">
+        <p class="d-flex mb-0">You have 0 reviews</p>
+      </div>
+    <% end %>
