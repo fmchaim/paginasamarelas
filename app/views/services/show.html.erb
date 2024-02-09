@@ -47,12 +47,15 @@
 
         <% if @service.reviews.any? %>
         <div class="img me-3 d-flex align-items-center">
-            <img class="image-review-show mb-1" src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-            <p class="mb-0"><%= @service.reviews.sample.contract.user.first_name %></p>
+            <% if @service.reviews.sample.contract.user.photo.attached? %>
+              <%= cl_image_tag @service.reviews.sample.contract.user.photo.key, class: "avatar me-2 my-auto", width: 30, height: 30 %>
+            <% end %>
+              <p class="mb-0"><%= @service.reviews.sample.contract.user.first_name %> <%= @service.reviews.sample.contract.user.last_name %></p>
+          </div>
         </div>
 
         <div class="review">
-          </h5><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </h5><i class="fa-solid fa-star mt-2"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           <p class="mt-2"><%= @service.reviews.sample.comment %></p>
         </div>
         <% else %>
