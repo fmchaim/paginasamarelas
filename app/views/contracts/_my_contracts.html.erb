@@ -15,9 +15,10 @@
         <% customer_contracts.each do |contract| %>
         <div class="card-contracts p-4 mx-auto">
 
-          <p class="pt-2 border-bottom mb-3"><strong><%= "Service: "%></strong> <%= "#{contract.service.name_service}" %></p>
+          <p class="title pt-2 border-bottom mb-3"><strong><%= "Service: "%></strong> <%= "#{contract.service.name_service}" %></p>
           <p><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></p>
           <p><strong><%= "Service provider: " %></strong> <%= "#{contract.service.user.first_name} #{contract.service.user.last_name}" %></p>
+          <p><strong><%= "Date: " %></strong> <%= "#{contract.date}" %></p>
 
           <% if contract.status == 'Pending' %>
               <p class="d-inline-flex"><strong><%= "Status: "%></strong><p class="d-inline-flex p-1 ms-1 border border-warning text-warning"><%= "#{contract.status}" %></p></p>
@@ -27,9 +28,8 @@
               <p class="d-inline-flex"><strong><%= "Status: "%></strong><p class="d-inline-flex p-1 ms-1 border border-danger text-danger"><%= "#{contract.status}" %></p></p>
           <% end %>
 
-            <p><strong><%= "Date: " %></strong> <%= "#{contract.date}" %></p>
 
-            <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn-yellow-outline mt-2 w-100' %>
+            <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn-yellow-outline w-100' %>
         </div>
       <% end %>
 
@@ -63,9 +63,10 @@
 
           <div class="card-contracts p-4 mx-auto">
 
-            <h6><strong><%= "Service: " %></strong> <%= "#{contract.service.name_service}" %></h6>
-            <h6><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></h6>
-            <h6><strong><%= "Client: " %></strong> <%= " #{contract.user.first_name} #{contract.user.last_name}" %></h6>
+            <p class="title pt-2 border-bottom mb-3"><strong><%= "Service: " %></strong> <%= "#{contract.service.name_service}" %></p>
+            <p><strong><%= "Description: " %></strong> <%= "#{contract.service.description_service}" %></p>
+            <p><strong><%= "Client: " %></strong> <%= " #{contract.user.first_name} #{contract.user.last_name}" %></p>
+            <p><strong><%= "Date: "%></strong> <%= "#{contract.date}" %></p>
 
             <% if contract.status == 'Pending' %>
               <p class="d-inline-flex"><strong><%= "Status: " %></strong> <p class="d-inline-flex p-1 ms-1 border border-warning text-warning mb-0"><%= "#{contract.status}" %></p></p>
@@ -75,8 +76,7 @@
               <p class="d-inline-flex"><strong><%= "Status: " %></strong> <p class="d-inline-flex p-1 ms-1 border border-danger text-danger mb-0"><%= "#{contract.status}" %></p></p>
             <% end %>
 
-            <p><strong><%= "Date: "%></strong> <%= "#{contract.date}" %></p>
-            <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn-yellow-outline mt-2 w-100' %>
+            <%= link_to "See more details", user_service_contract_path(user_id: contract.user.id, service_id: contract.service.id, id: contract.id), class:'btn-yellow-outline w-100' %>
           </div>
         <% end %>
       <% else %>

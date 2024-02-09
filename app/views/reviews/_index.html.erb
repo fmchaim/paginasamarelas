@@ -12,16 +12,16 @@
 
     <% current_user.reviews.each do |review| %>
     <div class="card-my-services p-4 mx-auto">
-      <p class="pt-2 border-bottom mb-3"><strong>Service: </strong><%= review.contract.service.name_service %></p>
 
-      <div>
-        <p><strong>Client: </strong><%= review.contract.user.first_name %> <%= review.contract.user.last_name %></p>
-        <% if review.contract.user.photo.attached? %>
-          <%= image_tag review.contract.user.photo %>
-        <% end %>
+      <p class="title pt-2 border-bottom mb-3"><strong>Service: </strong><%= review.contract.service.name_service %></p>
+      <div class="me-3 d-flex align-items-center">
+          <% if review.contract.user.photo.attached? %>
+            <%= cl_image_tag review.contract.user.photo.key, class: "avatar me-2 my-auto", width: 30, height: 30 %>
+          <% end %>
+          <p class="my-auto"><%= review.contract.user.first_name %> <%= review.contract.user.last_name %></p>
       </div>
 
-      <p><strong>Rating: </strong><%= review.rating %></p>
+      <p class="mb-0 mt-3"><strong>Rating: </strong><%= review.rating %></p>
       <p><strong>Comment: </strong><%= review.comment %></p>
     </div>
     <% end %>
