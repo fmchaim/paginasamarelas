@@ -32,7 +32,11 @@
                     <% if @contract.user == current_user && @contract.status != 'Pending' %> <!-- Verifica se o usuário é o cliente -->
                       <div class="d-flex align-items-center">
                         <p class="my-auto"><strong class="contract-bold">Has the contract been completed?</strong></p>
-                        <%= button_to 'Yes', done_path(@contract), method: :patch, data: { "turbo-method": :patch }, class: "btn-green mx-3" %>
+                        <% if @contract.done == true %>
+                          <p class="d-inline-flex"><p class="d-inline-flex p-2 ms-2 mb-0 border border-success text-success">Yes</p></p>
+                        <% else %>
+                          <%= button_to 'Yes', done_path(@contract), method: :patch, data: { "turbo-method": :patch }, class: "btn-green mx-3" %>
+                        <% end %>
                       </div>
                     <% end %>
 
